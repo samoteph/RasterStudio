@@ -15,20 +15,22 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition Width="5"></ColumnDefinition>
+                            <ColumnDefinition Width="8"></ColumnDefinition>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="0">
                             <TextBlock Text="RGB" FontWeight="Bold" HorizontalAlignment="Right" ></TextBlock>
-                            <TextBlock Text="Atari" FontWeight="Bold" HorizontalAlignment="Right" ></TextBlock>
+                            <TextBlock Text="Color" FontWeight="Bold" HorizontalAlignment="Right" ></TextBlock>
                             <TextBlock Text="Index" FontWeight="Bold" HorizontalAlignment="Right" ></TextBlock>
-                        </StackPanel>
+                            <TextBlock Text="Address" FontWeight="Bold" HorizontalAlignment="Right" ></TextBlock>
+                    </StackPanel>
 
                         <StackPanel Grid.Column="2">
                             <TextBlock x:Name="TextBlockRGB" HorizontalAlignment="Right"></TextBlock>
                             <TextBlock x:Name="TextBlockAtari" HorizontalAlignment="Right"></TextBlock>
                             <TextBlock x:Name="TextBlockIndex" HorizontalAlignment="Right"></TextBlock>
+                            <TextBlock x:Name="TextBlockColorAddress" HorizontalAlignment="Right"></TextBlock>
                         </StackPanel>
                     </Grid>
                 </ToolTip>

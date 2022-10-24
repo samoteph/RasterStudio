@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -27,64 +28,128 @@ namespace RasterStudio.UserControls
 
             var tagManagerHeaderFooter = new TagManager();
 
+            tagManagerHeaderFooter.AddTag(new Tag("Filename", () => MainPage.Instance.Project.Filename));
             tagManagerHeaderFooter.AddTag(new Tag("Year", () => DateTime.Now.Year.ToString()));
             tagManagerHeaderFooter.AddTag(new Tag("Month", () => DateTime.Now.Month.ToString()));
             tagManagerHeaderFooter.AddTag(new Tag("Day", () => DateTime.Now.Day.ToString()));
-            tagManagerHeaderFooter.AddTag(new Tag("Filename",()=>MainPage.Instance.Project.Filename));
 
             this.TagTextBoxHeader.TagManager = tagManagerHeaderFooter;
             this.TagTextBoxFooter.TagManager = tagManagerHeaderFooter;
 
-            var tagManagerRasters = new TagManager();
+            var tagManagerRasters = new TagRasterManager();
 
-            tagManagerRasters.AddTag(new Tag("Palette Address", () => DateTime.Now.Year.ToString()));
-            tagManagerRasters.AddTag(new Tag("Color Value", () => DateTime.Now.Month.ToString()));
+            tagManagerRasters.AddTag(new TagRaster("Color Address",(raster) => raster.ColorAddress));
+            tagManagerRasters.AddTag(new TagRaster("Color Index", (raster) => raster.ColorIndex.ToString()));
+            tagManagerRasters.AddTag(new TagRaster("Color Hexa Value", (raster, line) => raster.Colors[line].Color.ToString("x4")));
 
             this.TagTextBoxRasters.TagManager = tagManagerRasters;
+
+            this.GotFocus += ExportControl_GotFocus;
         }
+
+        private void ExportControl_GotFocus(object sender, RoutedEventArgs e)
+        {
+            this.UpdatePreview();
+        }
+
+        bool isUpdatingPreview;
+        bool needRefreshPreview;
 
         private void ButtonAddTemplate_Click(object sender, RoutedEventArgs e)
         {
         }
 
-        private void TagTextBoxHeader_TextChanged(object sender, EventArgs e)
+        private void TagTextBox_TextChanged(object sender, EventArgs e)
         {
             this.UpdatePreview();
         }
 
-        private void TagTextBoxFooter_TextChanged(object sender, EventArgs e)
+        public async void UpdatePreview()
         {
-            this.UpdatePreview();
+            if(this.isUpdatingPreview == false)
+            {
+                this.isUpdatingPreview = true;
+
+                await this.UpdatePreviewAsync();
+            }
+            else
+            {
+                this.needRefreshPreview = true;
+            }
         }
 
-        private void TagTextBoxRasters_TextChanged(object sender, EventArgs e)
+        private Task UpdatePreviewAsync()
         {
-            this.UpdatePreview();
+            return Task.Run(() =>
+            {
+                this.ExecuteUpdatePreview();
+            });
         }
 
-        public void UpdatePreview()
+        private async void ExecuteUpdatePreview()
         {
             StringBuilder builder = new StringBuilder();
 
-            if (string.IsNullOrWhiteSpace(this.TagTextBoxHeader.Text) == false)
+            string text = this.TagTextBoxHeader.GetText();
+
+            if (string.IsNullOrWhiteSpace(text) == false)
             {
-                builder.AppendLine(this.TagTextBoxHeader.Text);
+                builder.AppendLine(text);
             }
 
             var rasters = MainPage.Instance.Project.Rasters;
 
+            TagRasterManager tagRasterManager = (TagRasterManager)this.TagTextBoxRasters.TagManager;
+
+            int lineCount = rasters[0].Colors.Length;
+
+            List<AtariRaster> usedRasters = new List<AtariRaster>(16);
+
             foreach (var raster in rasters)
             {
-                builder.AppendLine(this.TagTextBoxRasters.Text);
+                if( MainPage.Instance.IsRasterColorModified(raster.ColorIndex) == true)
+                {
+                    usedRasters.Add(raster);
+                }
             }
-
-            if (string.IsNullOrWhiteSpace(this.TagTextBoxFooter.Text) == false)
+            
+            for (int line = 0; line < lineCount; line++)
             {
-                builder.AppendLine(this.TagTextBoxFooter.Text);
+                tagRasterManager.Line = line;
+
+                foreach (var raster in usedRasters)
+                {
+                    tagRasterManager.Raster = raster;
+
+                    text = this.TagTextBoxRasters.GetText();
+
+                    if (string.IsNullOrWhiteSpace(text) == false)
+                    {
+                        builder.AppendLine(text);
+                    }
+                }
             }
 
-            this.TextBlockPreview.Text = builder.ToString();
+            text = this.TagTextBoxFooter.GetText();
 
+            if (string.IsNullOrWhiteSpace(text) == false)
+            {
+                builder.AppendLine(text);
+            }
+
+            await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            {
+                this.TextBlockPreview.Text = builder.ToString();
+            });
+
+            // il y a eu modifciation depuis la dernière fois
+            if (this.needRefreshPreview == true)
+            {
+                this.needRefreshPreview = false;
+                this.ExecuteUpdatePreview();
+                }
+
+            this.isUpdatingPreview = false;
         }
     }
 }

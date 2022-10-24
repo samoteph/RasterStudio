@@ -1,11 +1,13 @@
 ﻿using Atari.Images;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -69,11 +71,45 @@ namespace RasterStudio.Models
         {
         }
 
-        public void Initialize(AtariImage image, int selectedColorIndex)
+        /// <summary>
+        /// Adresse de la couleur dans la achine (Atari,Amiga)
+        /// </summary>
+
+        public string ColorAddress
         {
+            get;
+            private set;
+        }
+
+        public int ColorIndex
+        {
+            get
+            {
+                return colorIndex;
+            }
+
+            private set
+            {
+                this.colorIndex = value;
+                this.ColorAddress = GetColorAddress(value);
+            }
+        }
+
+        private int colorIndex;
+
+        public static string GetColorAddress(int colorIndex)
+        {
+            // Atari
+            uint address = 0xffff8240 + (uint)(colorIndex * 2);
+            return address.ToString("X");
+        }
+
+        public void Initialize(AtariImage image, int colorIndex)
+        {
+            this.ColorIndex = colorIndex;
             this.Colors = new AtariColor[image.Height];
 
-            var color = image.Palette[selectedColorIndex];
+            var color = image.Palette[colorIndex];
 
             // Head peut être queue et vice versa
 

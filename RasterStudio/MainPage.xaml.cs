@@ -261,7 +261,7 @@ namespace RasterStudio
             // Fixe les etoiles de PaletteControl selon les informatons de Rasters
             for (int colorIndex = 0; colorIndex < image.Palette.Length; colorIndex++)
             {
-                this.PaletteControl.SetHaveRasterThumbDefined(colorIndex, this.project.Rasters[colorIndex].HaveRasterThumbDefined);
+                this.PaletteControl.SetHaveRasterThumbDefined(colorIndex, this.AreRasterThumbModified(colorIndex));
             }
 
             this.PaletteControl.SelectedColorIndex = selectedColorIndex;
@@ -295,6 +295,63 @@ namespace RasterStudio
         }
 
         /// <summary>
+        /// les thumbs du rasters sont-ils modifiées (position nombre et couleur)
+        /// </summary>
+        /// <param name="colorIndex"></param>
+        /// <returns></returns>
+
+        public bool AreRasterThumbModified(int colorIndex)
+        {
+            var thumbs = this.project.Rasters[colorIndex].Thumbs;
+
+            if ( thumbs.Count > 2 )
+            {
+                return true;
+            }
+
+            var color = this.PaletteControl.Palette[colorIndex].Color;
+
+            if (thumbs[0].Color.Color != color || thumbs[1].Color.Color != color)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// les couleurs du rasters sont-elles modifiées (on fait pas le test sur les 200 couleurs)
+        /// </summary>
+        /// <param name="colorIndex"></param>
+        /// <returns></returns>
+
+        public bool IsRasterColorModified(int colorIndex)
+        {
+            var color = this.PaletteControl.Palette[colorIndex].Color;
+            var thumbs = this.project.Rasters[colorIndex].Thumbs;
+
+            if (thumbs.Count > 2)
+            {
+                foreach(var thumb in thumbs)
+                {
+                    if(thumb.Color.Color != color)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            if (thumbs[0].Color.Color != color || thumbs[1].Color.Color != color)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Changement dans la collection de Thumbs d'un AtariRaster
         /// </summary>
         /// <param name="sender"></param>
@@ -304,7 +361,7 @@ namespace RasterStudio
         {
             var colorIndex = this.PaletteControl.SelectedColorIndex;
 
-            this.PaletteControl.SetHaveRasterThumbDefined(colorIndex, this.project.Rasters[colorIndex].Thumbs.Count > 2);
+            this.PaletteControl.SetHaveRasterThumbDefined(colorIndex, this.AreRasterThumbModified(colorIndex));
 
             this.AtariImageControl.DrawRasterOnScreen();
         }

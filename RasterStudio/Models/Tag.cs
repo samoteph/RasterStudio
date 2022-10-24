@@ -41,7 +41,7 @@ namespace RasterStudio.Models
 
         private GetTagValueHandler getTagValueCallback;
 
-        public string TagValue
+        virtual public string TagValue
         {
             get
             {
@@ -50,5 +50,62 @@ namespace RasterStudio.Models
         }
     }
 
+    /// <summary>
+    /// TagRaster
+    /// </summary>
+    /// <param name="raster"></param>
+    /// <returns></returns>
+
+    public class TagRaster : Tag
+    {
+        public TagRaster(string name, GetTagRasterValueHandler getTagRasterValueCallback) : base(name, null)
+        {
+            this.getTagRasterValueCallback = getTagRasterValueCallback;
+        }
+
+        public TagRaster(string name, GetTagRasterLineHandler getTagRasterLineCallback) : base(name, null)
+        {
+            this.getTagRasterLineCallback = getTagRasterLineCallback;
+        }
+
+
+        private GetTagRasterLineHandler getTagRasterLineCallback;
+        private GetTagRasterValueHandler getTagRasterValueCallback;
+
+        public AtariRaster Raster
+        {
+            get;
+            set;
+        }
+
+        public int Line
+        {
+            get;
+            set;
+        }
+
+        override public string TagValue
+        {
+            get
+            {
+                if (this.Raster != null)
+                {
+                    if (this.getTagRasterLineCallback != null)
+                    {
+                        return this.getTagRasterLineCallback.Invoke(this.Raster, this.Line);
+                    }
+                    else if (this.getTagRasterValueCallback != null)
+                    {
+                        return this.getTagRasterValueCallback.Invoke(this.Raster);
+                    }
+                }
+
+                return String.Empty;
+            }
+        }
+    }
+
+    public delegate string GetTagRasterLineHandler(AtariRaster raster, int line);
+    public delegate string GetTagRasterValueHandler(AtariRaster raster);
     public delegate string GetTagValueHandler();
 }

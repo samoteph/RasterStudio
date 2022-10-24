@@ -31,24 +31,10 @@ namespace RasterStudio.UserControls
             
         }
 
-        public string Text
+        public string GetText()
         {
-            get
-            {
-                return this.text;
-            }
-
-            private set
-            {
-                if (this.text != value)
-                {
-                    this.text = value;
-                    this.TextChanged?.Invoke(this, EventArgs.Empty);
-                }
-            }
+            return this.tagManager.ReplaceText();
         }
-
-        private string text;
 
         public event EventHandler TextChanged;
 
@@ -56,7 +42,8 @@ namespace RasterStudio.UserControls
         {
             if (this.TagManager != null)
             {
-                this.Text = this.TagManager.ReplaceText(this.TextBox.Text);
+                this.TagManager.OriginalText = this.TextBox.Text;
+                this.TextChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 

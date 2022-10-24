@@ -1,4 +1,5 @@
 ﻿using Atari.Images;
+using RasterStudio.Models;
 using System;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
@@ -48,6 +49,7 @@ namespace RasterStudio.UserControls
                     this.TextBlockRGB.Text = $"#{rgbColor.R.ToString("X2")}{rgbColor.G.ToString("X2")}{rgbColor.B.ToString("X2")}";
                     this.TextBlockAtari.Text = $"$0{this.Color.R}{this.Color.G}{this.Color.B}";
                     this.TextBlockIndex.Text = $"{value}";
+                    this.TextBlockColorAddress.Text = AtariRaster.GetColorAddress(value);
                 }
             }
         }
