@@ -1,0 +1,99 @@
+﻿<UserControl
+    x:Class="RasterStudio.UserControls.RasterControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RasterStudio.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:RasterStudio.Models"    
+    
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"    
+    >
+
+    <UserControl.Resources>
+        <models:EasingFunctionConverter x:Name="EasingFunctionConverter"/>
+        <models:EasingModeConverter x:Name="EasingModeConverter"/>
+    </UserControl.Resources>
+    
+    <Grid x:Name="LayoutRoot" BorderBrush="#3d3d3d" BorderThickness="1" Margin="2,0,2,0">
+        <Grid Margin="15,20,20,20">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="1.5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"></RowDefinition>
+                    <RowDefinition Height="35"></RowDefinition>
+                    <RowDefinition Height="35"></RowDefinition>
+                    <RowDefinition Height="35"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" VerticalAlignment="Center" Text="Line" FontSize="13" Foreground="#999999"></TextBlock>
+                <TextBox x:Name="TextBoxLine" Grid.Row="0" Text="{x:Bind SelectedRasterThumb.Line, Mode=TwoWay}" VerticalAlignment="Center" Padding="10,6" FontSize="13" BorderThickness="0.5" Background="Transparent" Grid.Column="1" KeyDown="TextBox_KeyDown" LosingFocus="TextBox_LosingFocus"></TextBox>
+
+                <TextBlock Grid.Row="1" VerticalAlignment="Center" Text="Color" FontSize="13" Foreground="#999999"></TextBlock>
+                <local:ColorControl Grid.Row="1" Margin="0,3,0,3" Grid.Column="1" x:Name="ColorControl" AtariColor="{x:Bind SelectedRasterThumb.Color, Mode=TwoWay}"></local:ColorControl>
+
+                <TextBlock Grid.Row="2" VerticalAlignment="Center" Text="Easing" FontSize="13" Foreground="#999999"></TextBlock>
+                <ComboBox x:Name="ComboBoxEasingFunction" Grid.Row="2" SelectedIndex="{x:Bind SelectedRasterThumb.EasingFunction, Mode=TwoWay, Converter={StaticResource EasingFunctionConverter}}" Grid.Column="1" FontSize="13" BorderThickness="0.5" Background="Transparent" HorizontalAlignment="Stretch" />
+
+                <TextBlock Grid.Row="3" VerticalAlignment="Center" Text="Mode" FontSize="13" Foreground="#999999"></TextBlock>
+                <ComboBox x:Name="ComboBoxEasingMode" Grid.Row="3" SelectedIndex="{x:Bind SelectedRasterThumb.EasingMode, Mode=TwoWay, Converter={StaticResource EasingModeConverter}}" Grid.Column="1" FontSize="13" BorderThickness="0.5" Background="Transparent" HorizontalAlignment="Stretch" />
+            
+            </Grid>
+            
+            <Grid Grid.Row="1" Margin="0,20,0,0">
+                <ListBox x:Name="ListBoxRasterThumbs" SelectedItem="{x:Bind SelectedRasterThumb,Mode=TwoWay}" Background="Transparent" BorderThickness="1" BorderBrush="#3D3D3D" Foreground="#999999">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Height="30">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40"></ColumnDefinition>
+                                    <ColumnDefinition Width="10"></ColumnDefinition>
+                                    <ColumnDefinition Width="23"></ColumnDefinition>
+                                    <ColumnDefinition Width="10"></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+
+                                <Border Background="{Binding Color32}"/>
+
+                                <TextBlock Grid.Column="2" VerticalAlignment="Center" TextAlignment="Left" Text="{Binding Line}" FontSize="13" Foreground="#999999"></TextBlock>
+
+                                <TextBlock Grid.Column="4" VerticalAlignment="Center" TextAlignment="Left" Text="{Binding EasingFunction}" FontSize="13" Foreground="#999999"></TextBlock>
+
+                           </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" HorizontalAlignment="Stretch" Height="40" Click="ButtonAddRasterThumb_Click">
+                    <FontIcon Glyph="&#xECC8;" FontSize="20"/>
+                </Button>
+                <Button x:Name="ButtonDeleteRasterThumb" Grid.Column="0" HorizontalAlignment="Stretch" Height="40" Click="ButtonRemoveRasterThumb_Click">
+                    <FontIcon Glyph="&#xE107;" FontSize="18"/>
+                </Button>
+            </Grid>
+            
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,2 @@
+C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\RasterStudio.csproj;x86
+C:\Sam\Dev\UWP\Labo\SamuelBlanchard.Xaml.Controls.Samples.SlateView\SamuelBlanchard.Xaml.Controls.SlateView\SamuelBlanchard.Xaml.Controls.SlateView.csproj;x86

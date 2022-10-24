@@ -1,0 +1,11 @@
+App.xbf
+MainPage.xbf
+UserControls\ColorControl.xbf
+UserControls\ColorPicker.xbf
+UserControls\ColorSelectorControl.xbf
+UserControls\GradientControl.xbf
+UserControls\PaletteControl.xbf
+UserControls\RasterControl.xbf
+UserControls\RasterSlider.xbf
+UserControls\RasterThumbControl.xbf
+UserControls\RGBColorControl.xbf

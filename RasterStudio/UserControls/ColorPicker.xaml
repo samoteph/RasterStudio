@@ -1,0 +1,83 @@
+﻿<UserControl
+    x:Class="RasterStudio.UserControls.ColorPicker"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RasterStudio.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="400"
+    d:DesignWidth="400"
+        
+    >
+
+    <Grid CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+        <Grid Margin="5">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="10"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="10"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="10"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid x:Name="GridSquareColors" Width="240" Height="240"></Grid>
+
+                <Grid x:Name="GridBlueColors" Grid.Column="2" Width="30"></Grid>
+
+                <Grid x:Name="GridColor" Grid.ColumnSpan="3" Height="32" Grid.Row="2">
+                    <TextBlock x:Name="TextBlockText" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"></TextBlock>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Column="2">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition ></RowDefinition>
+                    <RowDefinition Height="10"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Slider  x:Name="SliderR" Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="0" Minimum="0" Value="0" Maximum="7" ValueChanged="SliderR_ValueChanged" RenderTransformOrigin="0.5,0.5">
+                    <Slider.RenderTransform>
+                        <RotateTransform Angle="180"/>
+                    </Slider.RenderTransform>
+                </Slider>
+                <Slider  x:Name="SliderG" Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="1" Minimum="0" Value="0" Maximum="7" ValueChanged="SliderG_ValueChanged" RenderTransformOrigin="0.5,0.5">
+                    <Slider.RenderTransform>
+                        <RotateTransform Angle="180"/>
+                    </Slider.RenderTransform>
+                </Slider>
+                <Slider  x:Name="SliderB" Orientation="Vertical" HorizontalAlignment="Center" Grid.Column="2" Minimum="0" Value="0" Maximum="7" ValueChanged="SliderB_ValueChanged" RenderTransformOrigin="0.5,0.5">
+                    <Slider.RenderTransform>
+                        <RotateTransform Angle="180"/>
+                    </Slider.RenderTransform>
+                </Slider>
+
+                <TextBox x:Name="TextBoxR3" Grid.Column="0" Margin="0,0,2,0" Grid.Row="2" TextAlignment="Center" LostFocus="TextBoxR3_LostFocus"></TextBox>
+                <TextBox x:Name="TextBoxG3" Grid.Column="1" Margin="2,0,2,0" Grid.Row="2" TextAlignment="Center" LostFocus="TextBoxG3_LostFocus"></TextBox>
+                <TextBox x:Name="TextBoxB3" Grid.Column="2" Margin="0,0,2,0" Grid.Row="2" TextAlignment="Center" LostFocus="TextBoxB3_LostFocus"></TextBox>
+            </Grid>
+
+        </Grid>
+    </Grid>
+</UserControl>

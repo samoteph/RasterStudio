@@ -1,0 +1,50 @@
+﻿<UserControl
+    x:Class="RasterStudio.UserControls.DialogProject"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RasterStudio.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"    
+    >
+
+    <Grid x:Name="DialogContainer" Background="#C0000000">
+        <Grid Background="#2F2F2F" Padding="20" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
+
+            <StackPanel>
+                <TextBlock x:Name="TextBlockProjectTitle" Text="New Project" FontSize="25" Foreground="#A0A0A0"/>
+
+                <TextBlock Margin="0,20,0,5" Text="Name of project" FontSize="13" Foreground="#999999"/>
+                <TextBox x:Name="TextBoxProjectName" Margin="0,5,0,0" BorderThickness="0.5"></TextBox>
+
+                <TextBlock Margin="0,10,0,5" Text="Image Screenshot" FontSize="13" Foreground="#999999"/>
+
+                <Grid Margin="0,5,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="10"></ColumnDefinition>
+                        <ColumnDefinition Width="40"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="TextBoxImageFilename" IsEnabled="False"></TextBox>
+                    <Button x:Name="ButtonAddImage" ToolTipService.ToolTip="Load a PNG image" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" Click="ButtonAddImage_Click" Height="32">
+                        <FontIcon Glyph="&#xE10C;" FontSize="14"/>
+                    </Button>
+                </Grid>
+
+                <TextBlock Margin="0,5,0,5" Text="Palette" FontSize="13" Foreground="#999999"/>
+                <ComboBox x:Name="ComboBoxPalette" Margin="0,5,0,0" SelectedIndex="0" BorderThickness="0.5" HorizontalAlignment="Stretch">
+                    <ComboBoxItem>512 colors - Atari ST</ComboBoxItem>
+                    <ComboBoxItem IsEnabled="False">4096 colors - Atari STE</ComboBoxItem>
+                    <ComboBoxItem IsEnabled="False">4096 colors - Amiga</ComboBoxItem>
+                </ComboBox>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,-5,0">
+                    <Button Height="40" Margin="5,0,5,0" Background="#3F3F3F" Content="Cancel" Width="100" Click="ButtonCancel_Click"></Button>
+                    <Button x:Name="ButtonOK" Height="40" Margin="5,0,5,0" Content="Create" Width="100" Click="ButtonCreateProject_Click"></Button>
+                </StackPanel>
+
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</UserControl>
