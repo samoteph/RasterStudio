@@ -22,27 +22,16 @@ namespace RasterStudio.UserControls
 {
     public sealed partial class ExportControl : UserControl
     {
+        private Project project;
+
         public ExportControl()
         {
             this.InitializeComponent();
 
-            var tagManagerHeaderFooter = new TagManager();
+            this.project = MainPage.Instance.Project;
 
-            tagManagerHeaderFooter.AddTag(new Tag("Filename", () => MainPage.Instance.Project.Filename));
-            tagManagerHeaderFooter.AddTag(new Tag("Year", () => DateTime.Now.Year.ToString()));
-            tagManagerHeaderFooter.AddTag(new Tag("Month", () => DateTime.Now.Month.ToString()));
-            tagManagerHeaderFooter.AddTag(new Tag("Day", () => DateTime.Now.Day.ToString()));
-
-            this.TagTextBoxHeader.TagManager = tagManagerHeaderFooter;
-            this.TagTextBoxFooter.TagManager = tagManagerHeaderFooter;
-
-            var tagManagerRasters = new TagRasterManager();
-
-            tagManagerRasters.AddTag(new TagRaster("Color Address",(raster) => raster.ColorAddress));
-            tagManagerRasters.AddTag(new TagRaster("Color Index", (raster) => raster.ColorIndex.ToString()));
-            tagManagerRasters.AddTag(new TagRaster("Color Hexa Value", (raster, line) => raster.Colors[line].Color.ToString("x4")));
-
-            this.TagTextBoxRasters.TagManager = tagManagerRasters;
+            this.TagTextBoxHeader.TagManager = project.Exporter.PaletteHeaderTagManager;
+            this.TagTextBoxFooter.TagManager = project.Exporter.PaletteFooterTagManager;
 
             this.GotFocus += ExportControl_GotFocus;
         }
@@ -62,6 +51,16 @@ namespace RasterStudio.UserControls
         private void TagTextBox_TextChanged(object sender, EventArgs e)
         {
             this.UpdatePreview();
+        }
+
+        private void TagTextBoxHeader_GotFocus(object sender, RoutedEventArgs e)
+        {
+            this.ScrollViewPreview.ChangeView(0, 0, 1, true);
+        }
+
+        private void TagTextBoxFooter_GotFocus(object sender, RoutedEventArgs e)
+        {
+            this.ScrollViewPreview.ChangeView(0, this.ScrollViewPreview.ExtentHeight, 1, true);
         }
 
         public async void UpdatePreview()
@@ -88,66 +87,19 @@ namespace RasterStudio.UserControls
 
         private async void ExecuteUpdatePreview()
         {
-            StringBuilder builder = new StringBuilder();
-
-            string text = this.TagTextBoxHeader.GetText();
-
-            if (string.IsNullOrWhiteSpace(text) == false)
-            {
-                builder.AppendLine(text);
-            }
-
-            var rasters = MainPage.Instance.Project.Rasters;
-
-            TagRasterManager tagRasterManager = (TagRasterManager)this.TagTextBoxRasters.TagManager;
-
-            int lineCount = rasters[0].Colors.Length;
-
-            List<AtariRaster> usedRasters = new List<AtariRaster>(16);
-
-            foreach (var raster in rasters)
-            {
-                if( MainPage.Instance.IsRasterColorModified(raster.ColorIndex) == true)
-                {
-                    usedRasters.Add(raster);
-                }
-            }
-            
-            for (int line = 0; line < lineCount; line++)
-            {
-                tagRasterManager.Line = line;
-
-                foreach (var raster in usedRasters)
-                {
-                    tagRasterManager.Raster = raster;
-
-                    text = this.TagTextBoxRasters.GetText();
-
-                    if (string.IsNullOrWhiteSpace(text) == false)
-                    {
-                        builder.AppendLine(text);
-                    }
-                }
-            }
-
-            text = this.TagTextBoxFooter.GetText();
-
-            if (string.IsNullOrWhiteSpace(text) == false)
-            {
-                builder.AppendLine(text);
-            }
+            string text = MainPage.Instance.Project.Exporter.GetExportText();
 
             await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
-                this.TextBlockPreview.Text = builder.ToString();
+                this.TextBlockPreview.Text = text;
             });
 
-            // il y a eu modifciation depuis la dernière fois
+            // il y a eu modification depuis la dernière fois
             if (this.needRefreshPreview == true)
             {
                 this.needRefreshPreview = false;
                 this.ExecuteUpdatePreview();
-                }
+            }
 
             this.isUpdatingPreview = false;
         }

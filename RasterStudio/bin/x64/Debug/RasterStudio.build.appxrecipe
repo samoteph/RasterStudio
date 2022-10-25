@@ -124,6 +124,9 @@
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\ExportControl.xbf">
       <PackagePath>UserControls\ExportControl.xbf</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\ExportRastersControl.xbf">
+      <PackagePath>UserControls\ExportRastersControl.xbf</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\GradientControl.xbf">
       <PackagePath>UserControls\GradientControl.xbf</PackagePath>
     </AppxPackagedFile>

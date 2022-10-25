@@ -6,8 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400">
+    >
 
     <Grid Background="#2F2F2F" Padding="20">
 
@@ -56,9 +55,20 @@
         <ScrollViewer Margin="0,0,0,0" Grid.Row="2" Grid.Column="0" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Visible" VerticalScrollMode="Auto">
             <StackPanel Margin="0,0,20,0">
 
-                <local:TagTextBox x:Name="TagTextBoxHeader" Title="Header" TextChanged="TagTextBox_TextChanged"/>
-                <local:TagTextBox x:Name="TagTextBoxRasters" Title="Rasters" TextChanged="TagTextBox_TextChanged"/>
-                <local:TagTextBox x:Name="TagTextBoxFooter" Title="Footer" TextChanged="TagTextBox_TextChanged"/>
+                <local:TagTextBox x:Name="TagTextBoxHeader" Title="Palette header" TextChanged="TagTextBox_TextChanged" GotFocus="TagTextBoxHeader_GotFocus"/>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Border  HorizontalAlignment="Center" Width="2" Background="#1f1f1f" Margin="0,0,0,5"></Border>
+
+                    <local:ExportRastersControl Grid.Column="1" TextChanged="TagTextBox_TextChanged"></local:ExportRastersControl>
+                    
+                </Grid>
+                
+                <local:TagTextBox x:Name="TagTextBoxFooter" Title="Palette footer" TextChanged="TagTextBox_TextChanged" GotFocus="TagTextBoxFooter_GotFocus"/>
 
             </StackPanel>
         </ScrollViewer>
@@ -73,7 +83,8 @@
 
             <TextBlock Text="Preview" Margin="0,0,0,10" Foreground="#DDDDDD"></TextBlock>
 
-            <ScrollViewer Grid.Row="1"
+            <ScrollViewer x:Name="ScrollViewPreview"
+                Grid.Row="1"
                 HorizontalScrollMode="Auto" 
                 HorizontalScrollBarVisibility="Auto" 
                 VerticalScrollMode="Auto" 

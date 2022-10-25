@@ -30,13 +30,13 @@
     <AppXManifest Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2022-10-24T21:33:02.589</Modified>
+      <Modified>2022-10-25T22:00:39.166</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\RasterStudio.exe">
       <PackagePath>entrypoint\RasterStudio.exe</PackagePath>
-      <Modified>2022-10-24T21:33:01.475</Modified>
+      <Modified>2022-10-25T22:00:37.596</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\SamuelBlanchard\.nuget\packages\microsoft.bcl.asyncinterfaces\6.0.0\lib\netstandard2.0\Microsoft.Bcl.AsyncInterfaces.dll">
       <PackagePath>Microsoft.Bcl.AsyncInterfaces.dll</PackagePath>
@@ -128,79 +128,83 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.336</Modified>
+      <Modified>2022-10-25T22:00:37.436</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\Assets\Icons\Icon.xbf">
       <PackagePath>Assets\Icons\Icon.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.336</Modified>
+      <Modified>2022-10-25T22:00:37.437</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\Assets\Icons\DefaultScreenShot.xbf">
       <PackagePath>Assets\Icons\DefaultScreenShot.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.336</Modified>
+      <Modified>2022-10-25T22:00:37.437</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\MainPage.xbf">
       <PackagePath>MainPage.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.336</Modified>
+      <Modified>2022-10-25T22:00:37.437</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\AtariImageControl.xbf">
       <PackagePath>UserControls\AtariImageControl.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.336</Modified>
+      <Modified>2022-10-25T22:00:37.437</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\ColorControl.xbf">
       <PackagePath>UserControls\ColorControl.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.336</Modified>
+      <Modified>2022-10-25T22:00:37.437</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\ColorPicker.xbf">
       <PackagePath>UserControls\ColorPicker.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.336</Modified>
+      <Modified>2022-10-25T22:00:37.437</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\ColorSelectorControl.xbf">
       <PackagePath>UserControls\ColorSelectorControl.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.336</Modified>
+      <Modified>2022-10-25T22:00:37.437</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\DialogProject.xbf">
       <PackagePath>UserControls\DialogProject.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.336</Modified>
+      <Modified>2022-10-25T22:00:37.437</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\ExportControl.xbf">
       <PackagePath>UserControls\ExportControl.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.336</Modified>
+      <Modified>2022-10-25T22:00:37.437</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\ExportRastersControl.xbf">
+      <PackagePath>UserControls\ExportRastersControl.xbf</PackagePath>
+      <Modified>2022-10-25T22:00:37.437</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\GradientControl.xbf">
       <PackagePath>UserControls\GradientControl.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.339</Modified>
+      <Modified>2022-10-25T22:00:37.437</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\PaletteControl.xbf">
       <PackagePath>UserControls\PaletteControl.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.339</Modified>
+      <Modified>2022-10-25T22:00:37.438</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\RasterControl.xbf">
       <PackagePath>UserControls\RasterControl.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.340</Modified>
+      <Modified>2022-10-25T22:00:37.438</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\RasterSlider.xbf">
       <PackagePath>UserControls\RasterSlider.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.340</Modified>
+      <Modified>2022-10-25T22:00:37.438</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\RasterThumbControl.xbf">
       <PackagePath>UserControls\RasterThumbControl.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.340</Modified>
+      <Modified>2022-10-25T22:00:37.438</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\RGBColorControl.xbf">
       <PackagePath>UserControls\RGBColorControl.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.340</Modified>
+      <Modified>2022-10-25T22:00:37.438</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\SettingsControl.xbf">
       <PackagePath>UserControls\SettingsControl.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.340</Modified>
+      <Modified>2022-10-25T22:00:37.438</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\TagTextBox.xbf">
       <PackagePath>UserControls\TagTextBox.xbf</PackagePath>
-      <Modified>2022-10-24T21:33:01.340</Modified>
+      <Modified>2022-10-25T22:00:37.438</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\RasterStudio.xr.xml">
       <PackagePath>RasterStudio.xr.xml</PackagePath>
-      <Modified>2022-10-24T04:32:28.239</Modified>
+      <Modified>2022-10-25T22:00:37.380</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\Assets\LargeTile.scale-100.png">
       <PackagePath>Assets\LargeTile.scale-100.png</PackagePath>
@@ -474,11 +478,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2022-10-24T14:42:44.223</Modified>
+      <Modified>2022-10-25T19:35:53.895</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\Core\RasterStudio.exe">
       <PackagePath>RasterStudio.exe</PackagePath>
-      <Modified>2022-10-24T21:33:02.585</Modified>
+      <Modified>2022-10-25T22:00:39.162</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\SamuelBlanchard\.nuget\packages\microsoft.ui.xaml\2.7.0\buildTransitive\..\lib\uap10.0\Microsoft.UI.Xaml.winmd">
       <PackagePath>Microsoft.UI.Xaml.winmd</PackagePath>

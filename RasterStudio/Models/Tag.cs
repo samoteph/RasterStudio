@@ -58,9 +58,9 @@ namespace RasterStudio.Models
 
     public class TagRaster : Tag
     {
-        public TagRaster(string name, GetTagRasterValueHandler getTagRasterValueCallback) : base(name, null)
+        public TagRaster(string name, GetTagLineValueHandler getTagLineValueCallback) : base(name, null)
         {
-            this.getTagRasterValueCallback = getTagRasterValueCallback;
+            this.getTagLineValueCallback = getTagLineValueCallback;
         }
 
         public TagRaster(string name, GetTagRasterLineHandler getTagRasterLineCallback) : base(name, null)
@@ -70,7 +70,7 @@ namespace RasterStudio.Models
 
 
         private GetTagRasterLineHandler getTagRasterLineCallback;
-        private GetTagRasterValueHandler getTagRasterValueCallback;
+        private GetTagLineValueHandler getTagLineValueCallback;
 
         public AtariRaster Raster
         {
@@ -88,16 +88,13 @@ namespace RasterStudio.Models
         {
             get
             {
-                if (this.Raster != null)
+                if (this.getTagRasterLineCallback != null)
                 {
-                    if (this.getTagRasterLineCallback != null)
-                    {
-                        return this.getTagRasterLineCallback.Invoke(this.Raster, this.Line);
-                    }
-                    else if (this.getTagRasterValueCallback != null)
-                    {
-                        return this.getTagRasterValueCallback.Invoke(this.Raster);
-                    }
+                    return this.getTagRasterLineCallback.Invoke(this.Line, this.Raster);
+                }
+                else if (this.getTagLineValueCallback != null)
+                {
+                    return this.getTagLineValueCallback.Invoke(this.Line);
                 }
 
                 return String.Empty;
@@ -105,7 +102,7 @@ namespace RasterStudio.Models
         }
     }
 
-    public delegate string GetTagRasterLineHandler(AtariRaster raster, int line);
-    public delegate string GetTagRasterValueHandler(AtariRaster raster);
+    public delegate string GetTagRasterLineHandler(int line, AtariRaster raster);
+    public delegate string GetTagLineValueHandler(int line);
     public delegate string GetTagValueHandler();
 }

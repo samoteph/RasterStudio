@@ -23,6 +23,13 @@ namespace RasterStudio.Models
     {
         public Project()
         {
+           this.Exporter = new TextExporter(this);
+        }
+
+        [JsonIgnore]
+        public TextExporter Exporter
+        {
+            get;
         }
 
         [JsonIgnore]
@@ -233,9 +240,10 @@ namespace RasterStudio.Models
 
             var project = JsonConvert.DeserializeObject <Project>(jsonProject);
         
-            foreach(var raster in project.Rasters)
+            for(int i = 0; i<this.Rasters.Length; i++)
             {
-                raster.Initialize(image, 0);
+                var raster = project.Rasters[i];
+                raster.Initialize(image, i);
             }
 
             this.Image = image;

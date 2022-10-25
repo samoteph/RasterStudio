@@ -31,18 +31,13 @@ namespace RasterStudio.UserControls
             
         }
 
-        public string GetText()
-        {
-            return this.tagManager.ReplaceText();
-        }
-
         public event EventHandler TextChanged;
 
         private void OnTextChanged(object sender, RoutedEventArgs e)
         {
             if (this.TagManager != null)
             {
-                this.TagManager.OriginalText = this.TextBox.Text;
+                this.TagManager.TextCommand = this.TextBox.Text;
                 this.TextChanged?.Invoke(this, EventArgs.Empty);
             }
         }

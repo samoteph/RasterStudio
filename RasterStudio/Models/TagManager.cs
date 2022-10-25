@@ -12,6 +12,25 @@ namespace RasterStudio.Models
         Dictionary<string, Tag> tags = new Dictionary<string, Tag>();
         List<Tag> listTags = null;
 
+        /// <summary>
+        /// TagManager
+        /// </summary>
+
+        public TagManager()
+        {
+
+        }
+
+        /// <summary>
+        /// TagManager
+        /// </summary>
+
+        public TagManager(TagManager tagManager)
+        {
+            // ce qui nous interesse c'est d'avoir un OriginalText different le reste peut rester pareil
+            this.tags = tagManager.tags;
+        }
+
         public List<Tag> GetTags()
         {
             if (listTags == null)
@@ -27,7 +46,7 @@ namespace RasterStudio.Models
             this.tags.Add(tag.TextCommand, tag);
         }
 
-        public string OriginalText
+        public string TextCommand
         {
             get;
             set;
@@ -35,11 +54,13 @@ namespace RasterStudio.Models
 
         public string ReplaceText()
         {
-            StringBuilder builder = new StringBuilder(this.OriginalText);
+            StringBuilder builder = new StringBuilder(this.TextCommand);
 
             foreach(var tagName in tags.Keys)
             {
-                builder.Replace(tagName, tags[tagName].TagValue);
+                var tag = tags[tagName];
+                var tagValue = tag.TagValue;
+                builder.Replace(tagName, tagValue);
             }
 
             return builder.ToString();
@@ -48,6 +69,23 @@ namespace RasterStudio.Models
 
     public class TagRasterManager : TagManager
     {
+        /// <summary>
+        /// TagManager
+        /// </summary>
+
+        public TagRasterManager()
+        {
+
+        }
+
+        /// <summary>
+        /// TagManager
+        /// </summary>
+
+        public TagRasterManager(TagRasterManager tagManager) : base(tagManager)
+        {
+        }
+
         public AtariRaster Raster
         {
             get

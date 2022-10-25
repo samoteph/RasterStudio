@@ -266,7 +266,29 @@
     <RootType FullName="RasterStudio.UserControls.TagTextBox">
       <RootProperty Name="Title" />
       <RootEvent Name="TextChanged" />
+      <RootEvent Name="GotFocus" />
     </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Border">
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Width" />
+      <RootProperty Name="Background" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="BorderBrush" />
+    </RootType>
+    <RootType FullName="RasterStudio.UserControls.ExportRastersControl">
+      <RootEvent Name="TextChanged" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.CheckBox">
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="IsChecked" />
+      <RootProperty Name="Template" />
+      <RootProperty Name="Content" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.ControlTemplate">
+      <RootProperty Name="Template" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.ContentPresenter" />
     <RootType FullName="RasterStudio.UserControls.GradientControl" />
     <RootType FullName="RasterStudio.Models.EasingFunctionConverter" />
     <RootType FullName="RasterStudio.Models.EasingModeConverter" />
@@ -284,10 +306,6 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.DataTemplate">
       <RootProperty Name="Template" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.Border">
-      <RootProperty Name="Background" />
-      <RootProperty Name="BorderBrush" />
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.StaticResourceExtension" />
     <RootType FullName="Windows.UI.Xaml.Shapes.Rectangle">
@@ -312,6 +330,7 @@
     </RootType>
     <RootType FullName="Microsoft.Toolkit.Uwp.UI.Controls.WrapPanel">
       <RootProperty Name="Margin" />
+      <RootProperty Name="Orientation" />
     </RootType>
   </Roots.RootTypes>
 </Roots>
