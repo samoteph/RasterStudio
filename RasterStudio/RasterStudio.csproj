@@ -120,6 +120,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Content Include="Assets\Templates\DefaultTemplate.json" />
     <Compile Include="Controls\RichTextBox.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -132,6 +133,11 @@
     <Compile Include="Models\SortableObservableCollection.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TagManager.cs" />
+    <Compile Include="Models\Templates\BooleanToOpacityConverter.cs" />
+    <Compile Include="Models\Templates\TemplateExporter.cs" />
+    <Compile Include="Models\Templates\TemplateExporterSerializer.cs" />
+    <Compile Include="Models\Templates\TemplateTagRasterManager.cs" />
+    <Compile Include="Models\Templates\TemplateTagManager.cs" />
     <Compile Include="Models\TextExporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserControls\AtariImageControl.xaml.cs">

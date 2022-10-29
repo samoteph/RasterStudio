@@ -469,9 +469,19 @@ namespace RasterStudio
                             break;
                         case "Export":
 
+                            this.ExportControl.UpdatePreview();
+
                             this.AtariImageControl.Visibility = Visibility.Collapsed;
                             this.ExportControl.Visibility = Visibility.Visible;
                             this.SettingsControl.Visibility = Visibility.Collapsed;
+
+                            break;
+
+                        case "Settings":
+
+                            this.AtariImageControl.Visibility = Visibility.Collapsed;
+                            this.ExportControl.Visibility = Visibility.Collapsed;
+                            this.SettingsControl.Visibility = Visibility.Visible;
 
                             break;
                     }
@@ -483,6 +493,17 @@ namespace RasterStudio
         {
             this.ContentApplication.IsEnabled = !isOpen;
             this.ContentDialogNewProject.IsOpen = isOpen;
+        }
+
+        /// <summary>
+        /// Fermeture de l'application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private async void MenuItemExit_Click(object sender, RoutedEventArgs e)
+        {
+            await ApplicationView.GetForCurrentView().TryConsolidateAsync();
         }
     }
 }

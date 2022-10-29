@@ -1,0 +1,47 @@
+﻿[
+  {
+    "Name": "ASM DevPac Data",
+    "IsEditable": false,
+    "PaletteHeader": { "TextCommand": "HBL:" },
+    "PaletteFooter": { "TextCommand": null },
+    "PaletteRaster": {
+      "HeaderTextCommand": "\tdc.w @rasterline@,",
+      "ColorTextCommand": "$@colorhexavalue@,",
+      "FooterTextCommand": "-1"
+    },
+    "LineSelector": 1,
+    "ColorSelector": 2,
+    "OrientationSelector": 1,
+    "Separator": ","
+  },
+  {
+    "Name": "CSV",
+    "IsEditable": false,
+    "PaletteHeader": { "TextCommand": null },
+    "PaletteFooter": { "TextCommand": null },
+    "PaletteRaster": {
+      "HeaderTextCommand": null,
+      "ColorTextCommand": "$@colorhexavalue@@separator@",
+      "FooterTextCommand": null
+    },
+    "LineSelector": 1,
+    "ColorSelector": 1,
+    "OrientationSelector": 1,
+    "Separator": ","
+  },
+  {
+    "Name": "Empty Template",
+    "IsEditable": false,
+    "PaletteHeader": { "TextCommand": null },
+    "PaletteFooter": { "TextCommand": null },
+    "PaletteRaster": {
+      "HeaderTextCommand": null,
+      "ColorTextCommand": null,
+      "FooterTextCommand": null
+    },
+    "LineSelector": 0,
+    "ColorSelector": 0,
+    "OrientationSelector": 0,
+    "Separator": null
+  }
+]

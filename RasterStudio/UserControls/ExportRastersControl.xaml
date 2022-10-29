@@ -11,19 +11,45 @@
 
     <StackPanel>
 
-        <local:TagTextBox x:Name="TagTextBoxHeader" Title="Raster lines header" TextChanged="TagTextBox_TextChanged"/>
-        
-        <Grid>
+        <local:TagTextBox x:Name="TagTextBoxHeader" TextCommand="{x:Bind HeaderTextCommand, Mode=TwoWay}" HorizontalAlignment="Stretch" Title="Raster lines header" TextChanged="TagTextBox_TextChanged">
+            <local:TagTextBox.TitleContent>
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox x:Name="ComboBoxOrientation" VerticalAlignment="Center" FontSize="13" BorderThickness="0.5" Margin="0,0,10,0">
+                        <ComboBoxItem Content="Vertical" Tag="Vertical"></ComboBoxItem>
+                        <ComboBoxItem Content="Horizontal" Tag="Horizontal"></ComboBoxItem>
+                    </ComboBox>
+                    <ComboBox x:Name="ComboBoxLines" VerticalAlignment="Center" FontSize="13" BorderThickness="0.5" >
+                        <ComboBoxItem Content="All lines" Tag="All"></ComboBoxItem>
+                        <ComboBoxItem Content="Changing lines" Tag="Changing"></ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+            </local:TagTextBox.TitleContent>
+        </local:TagTextBox>
+
+        <Grid HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="40"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Border  HorizontalAlignment="Center" Width="2" Background="#1f1f1f" Margin="0,0,0,5"></Border>
 
-            <local:TagTextBox x:Name="TagTextBoxRasters" Grid.Column="1" Title="Color" TextChanged="TagTextBox_TextChanged"/>
+            <local:TagTextBox x:Name="TagTextBoxRasters" Grid.Column="1" TextCommand="{x:Bind ColorTextCommand, Mode=TwoWay}" Title="Color" TextChanged="TagTextBox_TextChanged">
+                <local:TagTextBox.TitleContent>
+                    <StackPanel Orientation="Horizontal">
+                        
+                        <TextBox x:Name="TextBoxSeparator" Text="{x:Bind Separator,Mode=TwoWay}" PlaceholderText="Separator" Width="80" FontSize="13" BorderThickness="0.5" Margin="0,0,10,0"/>
+                        
+                        <ComboBox x:Name="ComboBoxColors" VerticalAlignment="Center" FontSize="13" BorderThickness="0.5">
+                            <ComboBoxItem Content="All colors" Tag="All"></ComboBoxItem>
+                            <ComboBoxItem Content="Used colors" Tag="Used"></ComboBoxItem>
+                            <ComboBoxItem Content="Changing colors" Tag="Changing"></ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                </local:TagTextBox.TitleContent>
+            </local:TagTextBox>
         </Grid>
 
-        <local:TagTextBox x:Name="TagTextBoxFooter" Title="Raster line Footer" TextChanged="TagTextBox_TextChanged"/>
+        <local:TagTextBox x:Name="TagTextBoxFooter" TextCommand="{x:Bind FooterTextCommand, Mode=TwoWay}" Title="Raster line Footer" TextChanged="TagTextBox_TextChanged"/>
 
     </StackPanel>
 </UserControl>

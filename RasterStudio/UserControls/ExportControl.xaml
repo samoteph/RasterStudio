@@ -4,10 +4,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:RasterStudio.UserControls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:templates="using:RasterStudio.Models.Templates"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     >
 
+    <UserControl.Resources>
+        <templates:BooleanToOpacityConverter x:Name="BooleanToOpacity"></templates:BooleanToOpacityConverter>
+    </UserControl.Resources>
+    
     <Grid Background="#2F2F2F" Padding="20">
 
         <Grid.RowDefinitions>
@@ -33,19 +38,28 @@
             </Grid.ColumnDefinitions>
             
             <TextBlock Text="Export" FontSize="25" Foreground="#A0A0A0"/>
-            <ComboBox SelectedIndex="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="13" BorderThickness="0.5" >
+            
+            <!--<ComboBox SelectedIndex="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="13" BorderThickness="0.5" >
                 <ComboBoxItem Content="As Text"></ComboBoxItem>
                 <ComboBoxItem Content="As Binary"></ComboBoxItem>
-            </ComboBox>
+            </ComboBox>-->
 
-            <ComboBox Grid.Column="3" SelectedIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="13" BorderThickness="0.5" >
-                <ComboBoxItem Content="Assembler data"></ComboBoxItem>
-                <ComboBoxItem Content="Assembler code"></ComboBoxItem>
-                <ComboBoxItem Content="GFA data"></ComboBoxItem>
-                <ComboBoxItem Content="Custom template"></ComboBoxItem>
+            <ComboBox Grid.Column="3" x:Name="ComboBoxTemplates" SelectedIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="13" BorderThickness="0.5" >
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                            <FontIcon Glyph="&#xE104;" FontSize="10" Grid.Column="1" Opacity="{Binding IsEditable,Converter={StaticResource BooleanToOpacity}}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
             </ComboBox>
             
-            <Button x:Name="ButtonAddTemplate" ToolTipService.ToolTip="Save as new template" Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="ButtonAddTemplate_Click">
+            <Button x:Name="ButtonSaveTemplate" ToolTipService.ToolTip="Save custom template as" Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="ButtonSaveTemplate_Click">
                 <FontIcon Glyph="&#xE105;" FontSize="14"/>
             </Button>
         </Grid>
@@ -64,8 +78,8 @@
                     </Grid.ColumnDefinitions>
                     <Border  HorizontalAlignment="Center" Width="2" Background="#1f1f1f" Margin="0,0,0,5"></Border>
 
-                    <local:ExportRastersControl Grid.Column="1" TextChanged="TagTextBox_TextChanged"></local:ExportRastersControl>
-                    
+                    <local:ExportRastersControl x:Name="ExportRasterControl" Grid.Column="1" TextChanged="TagTextBox_TextChanged" SelectorChanged="ExportRastersControl_SelectorChanged"/>
+
                 </Grid>
                 
                 <local:TagTextBox x:Name="TagTextBoxFooter" Title="Palette footer" TextChanged="TagTextBox_TextChanged" GotFocus="TagTextBoxFooter_GotFocus"/>
@@ -79,6 +93,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition></RowDefinition>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <TextBlock Text="Preview" Margin="0,0,0,10" Foreground="#DDDDDD"></TextBlock>
@@ -95,6 +110,15 @@
             >
                 <TextBlock Margin="20,15,20,20" x:Name="TextBlockPreview" Foreground="#999999" FontSize="13" HorizontalAlignment="Stretch"></TextBlock>                
             </ScrollViewer>
+
+            <Grid Background="#3F3F3F" Grid.Row="2" Padding="10">
+                <Button Background="#1F1F1F" Padding="30,0,30,0" HorizontalAlignment="Right" Height="40" Click="ButtonExport_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon Glyph="&#xE792;" Margin="0,0,10,0"/>
+                        <TextBlock Text="Export"></TextBlock>
+                    </StackPanel>
+                </Button>
+            </Grid>
             
         </Grid>
     </Grid>

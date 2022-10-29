@@ -193,6 +193,36 @@ namespace RasterStudio.Models
             }
         }
 
+        public async Task ExportProjectAsync(string extension)
+        {
+            var savePicker = new Windows.Storage.Pickers.FileSavePicker();
+            savePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
+            // Dropdown of file types the user can save the file as
+            savePicker.FileTypeChoices.Add("Raster Studio Export file", new List<string>() { extension });
+            // Default file name if the user does not type one in or select a file to replace
+            savePicker.SuggestedFileName = this.FilenameWithoutExtension + extension;
+
+            Windows.Storage.StorageFile file = await savePicker.PickSaveFileAsync();
+
+            if (file != null)
+            {
+                await this.ExportProjectAsync(file);
+            }
+        }
+
+        public async Task ExportProjectAsync(StorageFile file)
+        {
+            string export = this.Exporter.GetExportText();
+
+            var exportArray = Encoding.ASCII.GetBytes(export);
+
+            // Ecriture du fichier d'exportation
+            using (var stream = await file.OpenStreamForWriteAsync())
+            {
+                await stream.WriteAsync(exportArray, 0, exportArray.Length);
+            }
+        }
+
         public async Task LoadProjectAsync()
         {
             var picker = new Windows.Storage.Pickers.FileOpenPicker();

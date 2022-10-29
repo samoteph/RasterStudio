@@ -103,7 +103,7 @@ namespace RasterStudio.Models
                     {
                         var tagRaster = (TagRaster)tag;
                         
-                        tagRaster.Raster = value;
+                        tagRaster.Parameters.raster = value;
                     }
 
                     this.ReplaceText();
@@ -130,7 +130,7 @@ namespace RasterStudio.Models
                     {
                         var tagRaster = (TagRaster)tag;
 
-                        tagRaster.Line = value;
+                        tagRaster.Parameters.line = value;
                     }
 
                     if (this.raster != null)
@@ -142,5 +142,36 @@ namespace RasterStudio.Models
         }
 
         private int line;
+
+        public bool IsLastColor
+        {
+            get
+            {
+                return this.isLastColor;
+            }
+
+            set
+            {
+                if (isLastColor != value)
+                {
+                    this.isLastColor = value;
+
+                    foreach (var tag in this.GetTags())
+                    {
+                        var tagRaster = (TagRaster)tag;
+
+                        tagRaster.Parameters.isLastColor = value;
+                    }
+
+                    if (this.raster != null)
+                    {
+                        this.ReplaceText();
+                    }
+                }
+            }
+        }
+
+        private bool isLastColor = false;
+
     }
 }

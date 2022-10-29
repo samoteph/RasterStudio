@@ -58,43 +58,26 @@ namespace RasterStudio.Models
 
     public class TagRaster : Tag
     {
-        public TagRaster(string name, GetTagLineValueHandler getTagLineValueCallback) : base(name, null)
+        public TagRaster(string name, GetTagRasterHandler getTagRasterCallback) : base(name, null)
         {
-            this.getTagLineValueCallback = getTagLineValueCallback;
+            this.getTagRasterCallback = getTagRasterCallback;
         }
 
-        public TagRaster(string name, GetTagRasterLineHandler getTagRasterLineCallback) : base(name, null)
-        {
-            this.getTagRasterLineCallback = getTagRasterLineCallback;
-        }
+        private GetTagRasterHandler getTagRasterCallback;
 
-
-        private GetTagRasterLineHandler getTagRasterLineCallback;
-        private GetTagLineValueHandler getTagLineValueCallback;
-
-        public AtariRaster Raster
+        public TagRasterParameters Parameters
         {
             get;
             set;
-        }
-
-        public int Line
-        {
-            get;
-            set;
-        }
+        } = new TagRasterParameters();
 
         override public string TagValue
         {
             get
             {
-                if (this.getTagRasterLineCallback != null)
+                if (this.getTagRasterCallback != null)
                 {
-                    return this.getTagRasterLineCallback.Invoke(this.Line, this.Raster);
-                }
-                else if (this.getTagLineValueCallback != null)
-                {
-                    return this.getTagLineValueCallback.Invoke(this.Line);
+                    return this.getTagRasterCallback.Invoke(this.Parameters);
                 }
 
                 return String.Empty;
@@ -102,7 +85,13 @@ namespace RasterStudio.Models
         }
     }
 
-    public delegate string GetTagRasterLineHandler(int line, AtariRaster raster);
-    public delegate string GetTagLineValueHandler(int line);
+    public class TagRasterParameters
+    {
+        public AtariRaster raster;
+        public int line;
+        public bool isLastColor;
+    }
+
+    public delegate string GetTagRasterHandler(TagRasterParameters parameters);
     public delegate string GetTagValueHandler();
 }

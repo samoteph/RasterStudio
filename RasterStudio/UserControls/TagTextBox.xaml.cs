@@ -98,5 +98,27 @@ namespace RasterStudio.UserControls
 
             this.TextBox.SelectionStart = cursorPosition + tag.TextCommand.Length;
         }
+
+
+
+        public object TitleContent
+        {
+            get { return (object)GetValue(TitleContentProperty); }
+            set { SetValue(TitleContentProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for TitleContent.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TitleContentProperty =
+            DependencyProperty.Register("TitleContent", typeof(object), typeof(TagTextBox), new PropertyMetadata(null));
+
+        public string TextCommand
+        {
+            get { return (string)GetValue(TextCommandProperty); }
+            set { SetValue(TextCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for TextCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TextCommandProperty =
+            DependencyProperty.Register("TextCommand", typeof(string), typeof(TagTextBox), new PropertyMetadata(string.Empty));
     }
 }

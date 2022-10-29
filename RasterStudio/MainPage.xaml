@@ -32,50 +32,55 @@
                             <MenuFlyoutItem Text="Open" Click="MenuItemOpen_Click"/>
                             <MenuFlyoutItem Text="Save As..." Icon="Save" Click="MenuItemSave_Click"/>
                             <MenuFlyoutSeparator />
-                            <MenuFlyoutItem Text="Exit"/>
+                            <MenuFlyoutItem Text="Exit" Click="MenuItemExit_Click"/>
                         </MenuBarItem>
+                        <!--
                         <MenuBarItem Title="Edit">
                             <MenuFlyoutItem Text="Copy color" Width="200"/>
                             <MenuFlyoutItem Text="Paste color" Click="MenuItemOpen_Click"/>
                         </MenuBarItem>
+                        -->
                         <MenuBarItem Title="Display">
                             <ToggleMenuFlyoutItem Text="All rasters" IsChecked="True" Width="200" Click="MenuItemAllRasters_Click"/>
-                            <ToggleMenuFlyoutItem Text="Blank screen" Click="MenuItemBlankScreen_Click"/>
+                            <!--<ToggleMenuFlyoutItem Text="Blank screen" Click="MenuItemBlankScreen_Click"/>-->
                         </MenuBarItem>
+                        <!--
                         <MenuBarItem Title="Help">
                             <MenuFlyoutItem Text="About Raster Studio" Width="200"/>
                         </MenuBarItem>
+                        -->
                     </MenuBar>
                 </StackPanel>
 
-                <NavigationView x:Name="NavigationView" Grid.Row="1" PaneDisplayMode="LeftCompact" IsPaneOpen="False" IsBackButtonVisible="Collapsed" IsPaneToggleButtonVisible="False" SelectionChanged="NavigationView_SelectionChanged">
+                <NavigationView x:Name="NavigationView" Grid.Row="1" PaneDisplayMode="LeftCompact" IsPaneOpen="False" IsBackButtonVisible="Collapsed" IsSettingsVisible="False" IsPaneToggleButtonVisible="False" SelectionChanged="NavigationView_SelectionChanged">
                     <NavigationView.MenuItems>
                         <NavigationViewItem Icon="Pictures" Content="Image View" Tag="Image" IsSelected="True"/>
                         <NavigationViewItem Icon="Repair" Content="Export Rasters" Tag="Export"/>
                     </NavigationView.MenuItems>
 
-                    <Grid >
+                    <Grid>
+                        <Grid>
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition Width="5"></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="5"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
 
-                        <usercontrols:PaletteControl x:Name="PaletteControl" Grid.Column="0" Width="50"/>
+                            <usercontrols:PaletteControl x:Name="PaletteControl" Grid.Column="0" Width="50"/>
 
-                        <usercontrols:RasterControl x:Name="RasterControl" Grid.Column="2" Width="230"/>
+                            <usercontrols:RasterControl x:Name="RasterControl" Grid.Column="2" Width="230"/>
 
-                        <usercontrols:RasterSlider x:Name="RasterSlider" Grid.Column="3"/>
+                            <usercontrols:RasterSlider x:Name="RasterSlider" Grid.Column="3"/>
 
-                        <Grid Grid.Column="4">
+                            <usercontrols:AtariImageControl x:Name="AtariImageControl" Grid.Column="4" />
 
-                            <usercontrols:AtariImageControl x:Name="AtariImageControl"/>
-                            <usercontrols:ExportControl x:Name="ExportControl" Visibility="Collapsed"/>
-                            <usercontrols:SettingsControl x:Name="SettingsControl" Visibility="Collapsed"/>
                         </Grid>
+
+                        <usercontrols:ExportControl x:Name="ExportControl" Visibility="Collapsed"/>
+                        <usercontrols:SettingsControl x:Name="SettingsControl" Visibility="Collapsed"/>
 
                     </Grid>
                 </NavigationView>
