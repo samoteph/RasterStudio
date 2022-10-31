@@ -5,6 +5,7 @@
   </Roots.Interfaces>
   <Roots.PropertyPathNames>
     <RootPropertyPathName Name="AtariColor" />
+    <RootPropertyPathName Name="SelectedItem" />
     <RootPropertyPathName Name="IsEditable" />
     <RootPropertyPathName Name="Name" />
     <RootPropertyPathName Name="EasingFunction" />
@@ -21,12 +22,12 @@
       <RootProperty Name="TextAlignment" />
       <RootProperty Name="BorderThickness" />
       <RootProperty Name="IsEnabled" />
-      <RootProperty Name="Text" />
-      <RootProperty Name="PlaceholderText" />
       <RootProperty Name="Width" />
-      <RootProperty Name="FontSize" />
-      <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Padding" />
+      <RootProperty Name="PlaceholderText" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="Text" />
+      <RootProperty Name="FontSize" />
       <RootProperty Name="Background" />
       <RootProperty Name="Height" />
       <RootProperty Name="HorizontalAlignment" />
@@ -85,8 +86,10 @@
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Foreground" />
       <RootProperty Name="Margin" />
-      <RootProperty Name="TextAlignment" />
+      <RootProperty Name="TextWrapping" />
       <RootProperty Name="Inlines" />
+      <RootProperty Name="TextAlignment" />
+      <RootEvent Name="Tapped" />
     </RootType>
     <RootType FullName="RasterStudio.Icon" />
     <RootType FullName="RasterStudio.DefaultScreenshot" />
@@ -97,14 +100,18 @@
       <RootProperty Name="HorizontalAlignment" />
     </RootType>
     <RootType FullName="RasterStudio.UserControls.DialogProject" />
+    <RootType FullName="RasterStudio.UserControls.DialogTemplate" />
+    <RootType FullName="RasterStudio.UserControls.DialogHelp" />
     <RootType FullName="Windows.UI.Xaml.Controls.RowDefinition">
       <RootProperty Name="Height" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.StackPanel">
       <RootProperty Name="Orientation" />
       <RootProperty Name="Children" />
-      <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="Margin" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Height" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.NavigationView">
       <RootProperty Name="PaneDisplayMode" />
@@ -146,15 +153,15 @@
       <RootProperty Name="Title" />
       <RootProperty Name="Items" />
     </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.MenuFlyoutItem">
+      <RootProperty Name="Text" />
+      <RootProperty Name="Width" />
+      <RootProperty Name="Icon" />
+      <RootEvent Name="Click" />
+    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ToggleMenuFlyoutItem">
       <RootProperty Name="Text" />
       <RootProperty Name="IsChecked" />
-      <RootProperty Name="Width" />
-      <RootEvent Name="Click" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.MenuFlyoutItem">
-      <RootProperty Name="Text" />
-      <RootProperty Name="Icon" />
       <RootProperty Name="Width" />
       <RootEvent Name="Click" />
     </RootType>
@@ -206,6 +213,7 @@
     <RootType FullName="Windows.UI.Xaml.Data.Binding">
       <RootProperty Name="Path" />
       <RootProperty Name="Mode" />
+      <RootProperty Name="ElementName" />
       <RootProperty Name="Converter" />
     </RootType>
     <RootType FullName="RasterStudio.UserControls.ColorControl">
@@ -237,27 +245,52 @@
       <RootProperty Name="Foreground" />
     </RootType>
     <RootType FullName="RasterStudio.UserControls.ColorSelectorControl" />
+    <RootType FullName="Windows.UI.Xaml.Controls.ScrollViewer">
+      <RootProperty Name="Height" />
+      <RootProperty Name="HorizontalScrollMode" />
+      <RootProperty Name="HorizontalScrollBarVisibility" />
+      <RootProperty Name="VerticalScrollBarVisibility" />
+      <RootProperty Name="VerticalScrollMode" />
+      <RootProperty Name="Content" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="Background" />
+      <RootProperty Name="BorderThickness" />
+      <RootProperty Name="BorderBrush" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Button">
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Height" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="Content" />
+      <RootProperty Name="Width" />
+      <RootProperty Name="Background" />
+      <RootProperty Name="Padding" />
+      <RootProperty Name="IsEnabled" />
+      <RootEvent Name="Click" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Image">
+      <RootProperty Name="Source" />
+      <RootProperty Name="Width" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="Margin" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Documents.Bold">
+      <RootProperty Name="Foreground" />
+      <RootProperty Name="Inlines" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Documents.Run" />
     <RootType FullName="Windows.UI.Xaml.Controls.ComboBox">
       <RootProperty Name="Margin" />
       <RootProperty Name="SelectedIndex" />
       <RootProperty Name="BorderThickness" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="Items" />
+      <RootProperty Name="Width" />
       <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="FontSize" />
       <RootProperty Name="ItemTemplate" />
       <RootProperty Name="Background" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.Button">
-      <RootProperty Name="Height" />
-      <RootProperty Name="Margin" />
-      <RootProperty Name="Background" />
-      <RootProperty Name="Content" />
-      <RootProperty Name="Width" />
-      <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="HorizontalAlignment" />
-      <RootProperty Name="Padding" />
-      <RootEvent Name="Click" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ComboBoxItem">
       <RootProperty Name="Content" />
@@ -265,17 +298,6 @@
       <RootProperty Name="Tag" />
     </RootType>
     <RootType FullName="RasterStudio.Models.Templates.BooleanToOpacityConverter" />
-    <RootType FullName="Windows.UI.Xaml.Controls.ScrollViewer">
-      <RootProperty Name="Margin" />
-      <RootProperty Name="HorizontalScrollMode" />
-      <RootProperty Name="VerticalScrollBarVisibility" />
-      <RootProperty Name="VerticalScrollMode" />
-      <RootProperty Name="Content" />
-      <RootProperty Name="HorizontalScrollBarVisibility" />
-      <RootProperty Name="Background" />
-      <RootProperty Name="BorderThickness" />
-      <RootProperty Name="BorderBrush" />
-    </RootType>
     <RootType FullName="RasterStudio.UserControls.TagTextBox">
       <RootProperty Name="Title" />
       <RootProperty Name="TextCommand" />

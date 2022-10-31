@@ -1,15 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RasterStudio.Models
 {
-    public class TemplateExporter
+    public class TemplateExporter : INotifyPropertyChanged
     {
         public TemplateExporter()
         {
+        }
+
+        public TemplateExporter(TemplateExporter templateExporter)
+        {
+            this.Name = templateExporter.Name;
+            this.Separator = templateExporter.Separator;
+            this.Extension = templateExporter.Extension;
+
+            this.ColorSelector = templateExporter.ColorSelector;
+            this.LineSelector = templateExporter.LineSelector;
+            this.OrientationSelector = templateExporter.OrientationSelector;
+            this.Separator = templateExporter.Separator;
+
+            this.PaletteHeader.TextCommand = templateExporter.PaletteHeader.TextCommand;
+            this.PaletteFooter.TextCommand = templateExporter.PaletteFooter.TextCommand;
+
+            this.PaletteRaster.HeaderTextCommand = templateExporter.PaletteRaster.HeaderTextCommand;
+            this.PaletteRaster.FooterTextCommand = templateExporter.PaletteRaster.FooterTextCommand;
+            this.PaletteRaster.ColorTextCommand = templateExporter.PaletteRaster.ColorTextCommand;
         }
 
         /// <summary>
@@ -18,9 +39,22 @@ namespace RasterStudio.Models
 
         public string Name
         {
-            get;
-            set;
+            get
+            {
+                return this.name;
+            }
+
+            set
+            {
+                if (this.name != value)
+                {
+                    this.name = value;
+                    this.RaisePropertyChange();
+                }
+            }
         }
+
+        private string name;
 
         public bool IsEditable
         {
@@ -28,7 +62,18 @@ namespace RasterStudio.Models
             set;
         }
 
+        public string Extension
+        {
+            get;
+            set;
+        }
+
         public TemplateExporter(TextExporter exporter)
+        {
+            this.CopyFrom(exporter);
+        }
+
+        public void CopyFrom(TextExporter exporter)
         {
             this.ColorSelector = exporter.ColorSelector;
             this.LineSelector = exporter.LineSelector;
@@ -42,6 +87,13 @@ namespace RasterStudio.Models
             this.PaletteRaster.FooterTextCommand = exporter.RasterLineFooterTagManager.TextCommand;
             this.PaletteRaster.ColorTextCommand = exporter.RasterColorTagManager.TextCommand;
         }
+
+        public void RaisePropertyChange([CallerMemberName] string propertyName=null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public void CopyTo(Project project)
         {

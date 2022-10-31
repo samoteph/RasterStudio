@@ -180,6 +180,13 @@ namespace RasterStudio
             get;
             private set;
         }
+        public DialogTemplate DialogTemplate 
+        { 
+            get
+            {
+                return this.ContentDialogNewTemplate;
+            }
+        }
 
         /// <summary>
         /// Couleur selectionné
@@ -368,13 +375,13 @@ namespace RasterStudio
 
         private void MenuItemNew_Click(object sender, RoutedEventArgs e)
         {
-            this.ContentDialogNewProject.ProjectAction = ProjectActions.New;
+            this.ContentDialogNewProject.DialogAction = DialogActions.New;
             this.ContentDialogNewProject.IsOpen = true;
         }
 
         private void MenuItemModify_Click(object sender, RoutedEventArgs e)
         {
-            this.ContentDialogNewProject.ProjectAction = ProjectActions.Modify;
+            this.ContentDialogNewProject.DialogAction = DialogActions.Modify;
             this.ContentDialogNewProject.IsOpen = true;
         }
 
@@ -495,6 +502,19 @@ namespace RasterStudio
             this.ContentDialogNewProject.IsOpen = isOpen;
         }
 
+        public DialogTemplate OpenTemplateDialog(bool isOpen)
+        {
+            this.ContentApplication.IsEnabled = !isOpen;
+            this.ContentDialogNewTemplate.IsOpen = isOpen;
+            return this.ContentDialogNewTemplate;
+        }
+
+        public void OpenHelpDialog(bool isOpen)
+        {
+            this.ContentApplication.IsEnabled = !isOpen;
+            this.ContentDialogHelp.IsOpen = isOpen;
+        }
+
         /// <summary>
         /// Fermeture de l'application
         /// </summary>
@@ -504,6 +524,17 @@ namespace RasterStudio
         private async void MenuItemExit_Click(object sender, RoutedEventArgs e)
         {
             await ApplicationView.GetForCurrentView().TryConsolidateAsync();
+        }
+
+        /// <summary>
+        /// Help
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private void MenuFlyoutItemHelp_Click(object sender, RoutedEventArgs e)
+        {
+            this.ContentDialogHelp.IsOpen = true;
         }
     }
 }

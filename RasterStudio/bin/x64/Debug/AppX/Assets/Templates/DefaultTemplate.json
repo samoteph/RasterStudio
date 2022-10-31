@@ -2,6 +2,7 @@
   {
     "Name": "ASM DevPac Data",
     "IsEditable": false,
+    "Extension": ".s",
     "PaletteHeader": { "TextCommand": "HBL:" },
     "PaletteFooter": { "TextCommand": null },
     "PaletteRaster": {
@@ -17,6 +18,7 @@
   {
     "Name": "CSV",
     "IsEditable": false,
+    "Extension": ".csv",
     "PaletteHeader": { "TextCommand": null },
     "PaletteFooter": { "TextCommand": null },
     "PaletteRaster": {
@@ -32,6 +34,7 @@
   {
     "Name": "Empty Template",
     "IsEditable": false,
+    "Extension": ".txt",
     "PaletteHeader": { "TextCommand": null },
     "PaletteFooter": { "TextCommand": null },
     "PaletteRaster": {

@@ -44,11 +44,9 @@
                             <ToggleMenuFlyoutItem Text="All rasters" IsChecked="True" Width="200" Click="MenuItemAllRasters_Click"/>
                             <!--<ToggleMenuFlyoutItem Text="Blank screen" Click="MenuItemBlankScreen_Click"/>-->
                         </MenuBarItem>
-                        <!--
                         <MenuBarItem Title="Help">
-                            <MenuFlyoutItem Text="About Raster Studio" Width="200"/>
+                            <MenuFlyoutItem Text="About Raster Studio" Width="200" Click="MenuFlyoutItemHelp_Click"/>
                         </MenuBarItem>
-                        -->
                     </MenuBar>
                 </StackPanel>
 
@@ -89,5 +87,7 @@
         </ContentControl>
 
         <usercontrols:DialogProject x:Name="ContentDialogNewProject"></usercontrols:DialogProject>
+        <usercontrols:DialogTemplate x:Name="ContentDialogNewTemplate"></usercontrols:DialogTemplate>
+        <usercontrols:DialogHelp x:Name="ContentDialogHelp"></usercontrols:DialogHelp>
     </Grid>
 </Page>

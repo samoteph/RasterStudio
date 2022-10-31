@@ -30,30 +30,30 @@ namespace RasterStudio.UserControls
             this.DialogContainer.Visibility = Visibility.Collapsed;
         }
 
-        public ProjectActions ProjectAction
+        public DialogActions DialogAction
         {
-            get { return (ProjectActions)GetValue(ProjectActionProperty); }
-            set { SetValue(ProjectActionProperty, value); }
+            get { return (DialogActions)GetValue(DialogActionProperty); }
+            set { SetValue(DialogActionProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for ProjectAction.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ProjectActionProperty =
-            DependencyProperty.Register("ProjectAction", typeof(ProjectActions), typeof(DialogProject), new PropertyMetadata(ProjectActions.New, OnProjectActionChange));
+        public static readonly DependencyProperty DialogActionProperty =
+            DependencyProperty.Register("DialogAction", typeof(DialogActions), typeof(DialogProject), new PropertyMetadata(DialogActions.New, OnDialogActionChange));
 
-        private static void OnProjectActionChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnDialogActionChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var c = d as DialogProject;
 
-            switch((ProjectActions)e.NewValue)
+            switch((DialogActions)e.NewValue)
             {
-                case ProjectActions.New:
+                case DialogActions.New:
                     c.ButtonAddImage.IsEnabled = true;
                     c.ComboBoxPalette.IsEnabled = true;
                     c.TextBlockProjectTitle.Text = "New project";
                     c.ButtonOK.Content = "Create";
                     break;
                 
-                case ProjectActions.Modify:
+                case DialogActions.Modify:
                     c.ButtonAddImage.IsEnabled = false;
                     c.ComboBoxPalette.IsEnabled = false;
                     c.TextBlockProjectTitle.Text = "Modify projet";
@@ -61,8 +61,6 @@ namespace RasterStudio.UserControls
                     break;
             }
         }
-
-
 
         /// <summary>
         /// IsOpen
@@ -97,15 +95,15 @@ namespace RasterStudio.UserControls
 
         private void Initialize()
         {
-            switch(this.ProjectAction)
+            switch(this.DialogAction)
             {
-                case ProjectActions.New:
+                case DialogActions.New:
                     this.TextBoxProjectName.Text = String.Empty;
                     this.TextBoxImageFilename.Text = String.Empty;
                     this.ComboBoxPalette.SelectedIndex = 0;
                     break;
 
-                case ProjectActions.Modify:
+                case DialogActions.Modify:
                     this.TextBoxProjectName.Text = MainPage.Instance.Project.Title;
                     this.TextBoxImageFilename.Text = this.imageFile?.Path ?? String.Empty;
                     this.ComboBoxPalette.SelectedIndex = 0;
@@ -141,9 +139,9 @@ namespace RasterStudio.UserControls
         private async void ButtonCreateProject_Click(object sender, RoutedEventArgs e)
         {
 
-            switch(this.ProjectAction)
+            switch(this.DialogAction)
             {
-                case ProjectActions.New:
+                case DialogActions.New:
                     bool isLoaded = false;
 
                     if (this.imageFile != null)
@@ -180,7 +178,7 @@ namespace RasterStudio.UserControls
                     }
                     break;
 
-                case ProjectActions.Modify:
+                case DialogActions.Modify:
                     
                     MainPage.Instance.Project.Title = this.TextBoxProjectName.Text;
                     MainPage.Instance.SetTitleBar();
@@ -189,11 +187,10 @@ namespace RasterStudio.UserControls
 
                     break;
             }
-
         }
     }
 
-    public enum ProjectActions
+    public enum DialogActions
     {
         New,
         Modify

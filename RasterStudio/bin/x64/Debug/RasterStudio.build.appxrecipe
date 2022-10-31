@@ -118,6 +118,12 @@
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\ColorSelectorControl.xbf">
       <PackagePath>UserControls\ColorSelectorControl.xbf</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\DialogHelp.xbf">
+      <PackagePath>UserControls\DialogHelp.xbf</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\DialogTemplate.xbf">
+      <PackagePath>UserControls\DialogTemplate.xbf</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\UserControls\DialogProject.xbf">
       <PackagePath>UserControls\DialogProject.xbf</PackagePath>
     </AppxPackagedFile>
@@ -154,8 +160,11 @@
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Debug\RasterStudio.xr.xml">
       <PackagePath>RasterStudio.xr.xml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\Assets\Templates\DefaultTemplate.json">
-      <PackagePath>Assets\Templates\DefaultTemplate.json</PackagePath>
+    <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\Assets\Help\AutoPortrait.png">
+      <PackagePath>Assets\Help\AutoPortrait.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\Assets\Help\Nutella.png">
+      <PackagePath>Assets\Help\Nutella.png</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\Assets\LargeTile.scale-100.png">
       <PackagePath>Assets\LargeTile.scale-100.png</PackagePath>
@@ -362,6 +371,12 @@
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\Assets\Mp3\WB.mp3">
+      <PackagePath>Assets\Mp3\WB.mp3</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\Assets\Templates\DefaultTemplate.json">
+      <PackagePath>Assets\Templates\DefaultTemplate.json</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>

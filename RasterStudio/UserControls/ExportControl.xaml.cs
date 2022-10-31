@@ -1,15 +1,21 @@
 ﻿using RasterStudio.Models;
+using RasterStudio.Models.Templates;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.Storage.AccessCache;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -24,6 +30,8 @@ namespace RasterStudio.UserControls
 {
     public sealed partial class ExportControl : UserControl
     {
+        private TemplateExporter currentTemplateExporter;
+        private TemplateExporterFileManager templateExporterfileManager = new TemplateExporterFileManager();
         private Project project;
 
         public ExportControl()
@@ -42,21 +50,10 @@ namespace RasterStudio.UserControls
 
         private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            string json = null;
-
-            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Templates/DefaultTemplate.json"));
-
-            using (var inputStream = await file.OpenReadAsync())
-            using (var classicStream = inputStream.AsStreamForRead())
-            using (var streamReader = new StreamReader(classicStream))
-            {
-                json = streamReader.ReadToEnd();
-            }
-
-            var templateExporters = TemplateExporterSerializer.DeserializeCollection(json);
+            await templateExporterfileManager.LoadCompleteTemplateExportersAsync();
 
             this.ComboBoxTemplates.SelectionChanged += OnTemplateChanged;
-            this.ComboBoxTemplates.ItemsSource = templateExporters;
+            this.ComboBoxTemplates.ItemsSource = templateExporterfileManager.CompleteTemplateExporters;
         }
 
         /// <summary>
@@ -68,30 +65,36 @@ namespace RasterStudio.UserControls
         private void OnTemplateChanged(object sender, SelectionChangedEventArgs e)
         {
             var templateExporter = this.ComboBoxTemplates.SelectedItem as TemplateExporter;
-            
-            templateExporter.CopyTo(project);
-            this.ApplyExporter();
+
+            if (templateExporter != null)
+            {
+                this.currentTemplateExporter = templateExporter;
+
+                templateExporter.CopyTo(project);
+
+                this.ApplyTemplateExporter(templateExporter);
+            }
         }
 
         /// <summary>
         /// Apply Exporter
         /// </summary>
 
-        private void ApplyExporter()
+        private void ApplyTemplateExporter(TemplateExporter exporter)
         {
-            var exporter = this.project.Exporter;
+            this.TagTextBoxHeader.TextCommand = exporter.PaletteHeader.TextCommand;
+            this.TagTextBoxFooter.TextCommand = exporter.PaletteFooter.TextCommand;
 
-            this.TagTextBoxHeader.TextCommand = exporter.PaletteHeaderTagManager.TextCommand;
-            this.TagTextBoxFooter.TextCommand = exporter.PaletteFooterTagManager.TextCommand;
-
-            this.ExportRasterControl.HeaderTextCommand = exporter.RasterLineHeaderTagManager.TextCommand;
-            this.ExportRasterControl.FooterTextCommand = exporter.RasterLineFooterTagManager.TextCommand;
-            this.ExportRasterControl.ColorTextCommand = exporter.RasterColorTagManager.TextCommand;
+            this.ExportRasterControl.HeaderTextCommand = exporter.PaletteRaster.HeaderTextCommand;
+            this.ExportRasterControl.FooterTextCommand = exporter.PaletteRaster.FooterTextCommand;
+            this.ExportRasterControl.ColorTextCommand = exporter.PaletteRaster.ColorTextCommand;
 
             this.ExportRasterControl.LineSelector = exporter.LineSelector;
             this.ExportRasterControl.OrientationSelector = exporter.OrientationSelector;
             this.ExportRasterControl.Separator = exporter.Separator;
             this.ExportRasterControl.ColorSelector = exporter.ColorSelector;
+
+            this.TextBoxExtension.Text = exporter.Extension ?? String.Empty;
         }
 
         private void ExportControl_GotFocus(object sender, RoutedEventArgs e)
@@ -102,15 +105,83 @@ namespace RasterStudio.UserControls
         bool isUpdatingPreview;
         bool needRefreshPreview;
 
-        private void ButtonSaveTemplate_Click(object sender, RoutedEventArgs e)
+        private async void ButtonDeleteTemplate_Click(object sender, RoutedEventArgs e)
         {
+            MessageDialog dialog = new MessageDialog($"Do you want to remove the template \"{this.currentTemplateExporter.Name}\"?", "Remove template");
 
-            TemplateExporter templateExporter = new TemplateExporter(project.Exporter);
+            UICommand buttonOK = new UICommand("OK");
+            dialog.Commands.Add(buttonOK);
+            UICommand buttonCancel = new UICommand("Cancel");
+            dialog.Commands.Add(buttonCancel);
 
-            templateExporter.Name = "ASM DevPac Data";
-            templateExporter.IsEditable = false;
+            var buttonResult = await dialog.ShowAsync();
+            
+            if(buttonResult == buttonOK)
+            {
+                await this.templateExporterfileManager.DeleteWriteableTemplateExporterAsync(this.currentTemplateExporter);
+                this.ComboBoxTemplates.SelectedIndex = 0;
+            }        
+        }
 
-            string json = TemplateExporterSerializer.SerializeCollection(new List<TemplateExporter>() { templateExporter });
+        private async void ButtonSaveTemplate_Click(object sender, RoutedEventArgs e)
+        {
+            // Template par defaut dont on veut faire une copie
+            if (this.currentTemplateExporter.IsEditable == false)
+            {
+                var dialog = MainPage.Instance.DialogTemplate;
+
+                dialog.TemplateExporterName = this.currentTemplateExporter.Name;
+                dialog.DialogAction = DialogActions.New;
+
+                await dialog.ShowDialogAsync();
+
+                if (dialog.Result != DialogResult.ButtonCancel)
+                {
+                    await this.CreateTemplateExporterFromCurrentTemplateAsync(dialog.TemplateExporterName);
+                }
+            }
+            else
+            {
+                var dialog = MainPage.Instance.DialogTemplate;
+
+                dialog.TemplateExporterName = this.currentTemplateExporter.Name;
+                dialog.DialogAction = DialogActions.Modify;
+
+                await dialog.ShowDialogAsync();
+
+                if (dialog.Result == DialogResult.ButtonSave)
+                {
+                    this.currentTemplateExporter.Name = dialog.TemplateExporterName;
+                    this.currentTemplateExporter.Extension = this.TextBoxExtension.Text;
+
+                    this.currentTemplateExporter.CopyFrom(project.Exporter);
+
+                    // ici on doit cloner le TextExporter (constructeur de TemplateExporter)
+
+                    await this.templateExporterfileManager.SaveWriteableTemplateExporterAsync(this.currentTemplateExporter);
+
+                    this.ComboBoxTemplates.SelectedItem = this.currentTemplateExporter;
+                }
+                // Button OK (Save As)
+                else
+                {
+                    await this.CreateTemplateExporterFromCurrentTemplateAsync(dialog.TemplateExporterName);
+                }
+            }
+        }
+
+        private async Task CreateTemplateExporterFromCurrentTemplateAsync(string templateExporterName)
+        {
+            var newTemplateExporter = new TemplateExporter(this.project.Exporter);
+
+            newTemplateExporter.Name = templateExporterName;
+            newTemplateExporter.Extension = this.TextBoxExtension.Text;
+            newTemplateExporter.IsEditable = true;
+
+            await this.templateExporterfileManager.SaveWriteableTemplateExporterAsync(newTemplateExporter);
+
+            this.currentTemplateExporter = newTemplateExporter;
+            this.ComboBoxTemplates.SelectedItem = newTemplateExporter;
         }
 
         private void TagTextBox_TextChanged(object sender, EventArgs e)
@@ -182,7 +253,25 @@ namespace RasterStudio.UserControls
 
         private async void ButtonExport_Click(object sender, RoutedEventArgs e)
         {
-            await MainPage.Instance.Project.ExportProjectAsync(".csv");
+            await MainPage.Instance.Project.ExportProjectAsync(this.TextBoxExtension.Text);
+        }
+
+        private void TextBoxExtension_LostFocus(object sender, RoutedEventArgs e)
+        {
+            string extension = this.TextBoxExtension.Text.Trim();
+        
+            if(string.IsNullOrEmpty(extension) && extension.StartsWith(".") == false)
+            {
+                extension = "." + extension;
+                this.TextBoxExtension.Text = extension;
+            }
+        }
+
+        private void ButtonCopy_Click(object sender, RoutedEventArgs e)
+        {
+            var dataPackage = new DataPackage();
+            dataPackage.SetText(this.TextBlockPreview.Text);
+            Clipboard.SetContent(dataPackage);
         }
     }
 }

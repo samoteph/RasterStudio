@@ -32,7 +32,7 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition Width="120"></ColumnDefinition>
                 <ColumnDefinition Width="10"></ColumnDefinition>
-                <ColumnDefinition Width="170"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="10"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
@@ -44,24 +44,31 @@
                 <ComboBoxItem Content="As Binary"></ComboBoxItem>
             </ComboBox>-->
 
-            <ComboBox Grid.Column="3" x:Name="ComboBoxTemplates" SelectedIndex="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="13" BorderThickness="0.5" >
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Name}"></TextBlock>
-                            <FontIcon Glyph="&#xE104;" FontSize="10" Grid.Column="1" Opacity="{Binding IsEditable,Converter={StaticResource BooleanToOpacity}}"/>
-                        </Grid>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            
-            <Button x:Name="ButtonSaveTemplate" ToolTipService.ToolTip="Save custom template as" Grid.Column="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="ButtonSaveTemplate_Click">
-                <FontIcon Glyph="&#xE105;" FontSize="14"/>
-            </Button>
+            <StackPanel Orientation="Horizontal" Grid.Column="3">
+                
+                <TextBlock Text="Template:" VerticalAlignment="Center" Margin="10,0,10,0" Foreground="#999999" FontSize="13"></TextBlock>
+
+                <ComboBox x:Name="ComboBoxTemplates" SelectedIndex="0" Width="170" VerticalAlignment="Center" FontSize="13" BorderThickness="0.5" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                                <FontIcon Glyph="&#xE104;" Margin="3,-5,0,0" FontSize="7" Foreground="#999999" Grid.Column="1" Opacity="{Binding IsEditable,Converter={StaticResource BooleanToOpacity}}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="5">
+                <Button x:Name="ButtonSaveTemplate" ToolTipService.ToolTip="Save template" Margin="5,0,5,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="ButtonSaveTemplate_Click">
+                    <FontIcon Glyph="&#xE105;" FontSize="14"/>
+                </Button>
+                <Button x:Name="ButtonDeleteTemplate" IsEnabled="{Binding ElementName=ComboBoxTemplates, Path=SelectedItem.IsEditable}" ToolTipService.ToolTip="Delete template" Margin="5,0,5,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="ButtonDeleteTemplate_Click">
+                    <FontIcon Glyph="&#xE107;" FontSize="14"/>
+                </Button>
+            </StackPanel>
         </Grid>
         
         <!-- Parameters -->
@@ -112,12 +119,15 @@
             </ScrollViewer>
 
             <Grid Background="#3F3F3F" Grid.Row="2" Padding="10">
-                <Button Background="#1F1F1F" Padding="30,0,30,0" HorizontalAlignment="Right" Height="40" Click="ButtonExport_Click">
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon Glyph="&#xE792;" Margin="0,0,10,0"/>
-                        <TextBlock Text="Export"></TextBlock>
-                    </StackPanel>
-                </Button>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="35">
+                    <Button Background="#1F1F1F" Padding="30,0,30,0" Content="Copy" VerticalAlignment="Stretch" Click="ButtonCopy_Click"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="35">
+                    <TextBox x:Name="TextBoxExtension" BorderThickness="0.5" Width="100" Padding="10,6,10,0" PlaceholderText="Extension" Margin="0,0,10,0" VerticalAlignment="Stretch" LostFocus="TextBoxExtension_LostFocus"></TextBox>
+                    <Button Background="#1F1F1F" Padding="30,0,30,0" Content="Export" VerticalAlignment="Stretch" Click="ButtonExport_Click"/>
+                </StackPanel>
             </Grid>
             
         </Grid>
