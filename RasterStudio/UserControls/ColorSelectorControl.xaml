@@ -10,6 +10,13 @@
     d:DesignWidth="400">
 
         <Grid x:Name="GridColor">
+            <!--
+            <Grid.ContextFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem Text="Swap with selected color" Click="MenuFlyoutItemSwap_Click"></MenuFlyoutItem>         
+                </MenuFlyout>            
+            </Grid.ContextFlyout>
+            -->
             <ToolTipService.ToolTip>
                 <ToolTip HorizontalOffset="25" VerticalOffset="0" Placement="Right">
                     <Grid>

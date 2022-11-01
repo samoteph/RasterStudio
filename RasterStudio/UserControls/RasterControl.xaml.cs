@@ -200,9 +200,9 @@ namespace RasterStudio.UserControls
                 {
                     line = 0;
                 }
-                else if(line > 199)
+                else if(line > (MainPage.Instance.Project.Image.Height - 1))
                 {
-                    line = 199;
+                    line = (MainPage.Instance.Project.Image.Height - 1);
                 }
 
                 if (this.SelectedRasterThumb != null)

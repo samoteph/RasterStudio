@@ -55,7 +55,7 @@
                                 <TextBlock Text="version 1.0" FontSize="12" Foreground="#AAAAAA"></TextBlock>
                                 <TextBlock TextWrapping="Wrap" FontSize="10" Margin="0,10,0,0">
                                 <Run>
-                                    Raster Studio is an application dedicated to the creation of an effect called Rasters. It consist in the change of the palette of a color each line of screen (HBL).For more informations about Raster effect please follow the link below.
+                                    Raster Studio is an application dedicated to the creation of an effect called Rasters. It consists of changing the palette of a color at each screen line (HBL).For more informations about Raster effect please follow the link below.
                                 </Run>
                                 </TextBlock>
                                 <TextBlock TextWrapping="Wrap" FontSize="10" Margin="0,10,0,0" Tapped="TextBlockRasterStudio_Tapped">
@@ -99,11 +99,11 @@
                         <TextBlock Text="GREETINGS" FontWeight="Black" Margin="0,0,0,10"></TextBlock>
 
                         <TextBlock TextWrapping="Wrap" FontSize="12">
-                        A little coucou to Family and Friends : Alessandra, Paolo from my personal team, Nicolas, Kat, Marin, Achille, Jeanne, Yvma, Manon, Isaac, Lizie from my family. Gwendal, FX, Guillaume, Fred, Remy and all the team Synergiz. A special thanks for Benjamin for his help in the catching of Atari ST hardware. All the members of the group Miracle Boy in Dragon Land. Rati, Zisquier, Mara of the discord group ASMtariSTe. Big thanks to the Atari Forum. Have a nice day :)
+                        A little hello to Family and Friends : Alessandra, Paolo, Nicolas, Kat, Marin, Achille, Jeanne, Yvma, Manon, Isaac, Lizie, Virginie and Djumbo. High five to Gwendal, FX, Guillaume, Fred, Remy and all the team Synergiz. A special thanks for Benjamin for his help in the catching of Atari ST hardware. Hi to All the members of the group Miracle Boy in Dragon Land and also Rati, Zisquier, Mara of the discord group ASMtariSTe. Big thanks to the Atari Forum. Have a nice day :)
                         </TextBlock>
 
                         <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="10">
-                            Song: Long distance from Monster World IV (Genesis)
+                            Song: Long distance from Monster World IV (Genesis)                            
                         </TextBlock>
 
 

@@ -351,19 +351,39 @@ namespace RasterStudio.UserControls
             }
         }
 
-        public async Task LoadImageAsync(StorageFile file)
+        public async Task LoadImageAsync(StorageFile imageFile, StorageFile paletteFile)
         {
-            using (var streamStorage = await file.OpenReadAsync())
+            AtariPalette palette = null;
+
+            if(paletteFile != null)
+            {
+                using (var streamStorage = await paletteFile.OpenReadAsync())
+                {
+                    using (var stream = streamStorage.AsStreamForRead())
+                    {
+                        // chargement et creation de la palette automatiquement
+                        palette = AtariPalette.Load(stream);
+                    }
+                }
+            }
+
+            using (var streamStorage = await imageFile.OpenReadAsync())
             {
                 using (var stream = streamStorage.AsStreamForRead())
                 {
-                    // chargement et creation de la palette automatiquement
-                    this.Project.Image = AtariImage.Load(stream);
+                    // chargement et creation de la palette automatiquement si palette est null
+                    this.Project.Image = AtariImage.Load(stream, palette);
                 }
             }
 
             // Affichage dans SlateView
-            await this.SlateView.LoadImage(file);
+            await this.SlateView.LoadImage(imageFile);
+        }
+
+        public void LoadImage(AtariImage image)
+        {
+            this.SlateView.CreatePixels(image.Width, image.Height);
+            this.DrawRasterOnScreen();
         }
     }
 }

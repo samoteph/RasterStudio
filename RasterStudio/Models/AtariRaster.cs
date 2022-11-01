@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -59,7 +60,7 @@ namespace RasterStudio.Models
                 }
                 else if(this.thumbs.Count == 2)
                 {
-                    bool haveOnlyEdge = this.thumbs[0].Line == 0 && this.thumbs[1].Line == 199;
+                    bool haveOnlyEdge = this.thumbs[0].Line == 0 && this.thumbs[1].Line == (MainPage.Instance.Project.Image.Height - 1);
                     return haveOnlyEdge == false;
                 }
 
@@ -198,10 +199,10 @@ namespace RasterStudio.Models
                 sortedThumbs.Insert(0, raster);
             }
 
-            if (queue.Line < 199)
+            if (queue.Line < (MainPage.Instance.Project.Image.Height - 1))
             {
                 var raster = new RasterThumb();
-                raster.Fill(199, queue.Color, EasingFunction.None, false);
+                raster.Fill(MainPage.Instance.Project.Image.Height - 1, queue.Color, EasingFunction.None, false);
                 sortedThumbs.Add(raster);
             }
 
@@ -216,9 +217,9 @@ namespace RasterStudio.Models
                 {
                     double distancePixel = (thumb.Line - lastThumb.Line) + 1;
 
-                    double distanceR = (thumb.Color.R - lastThumb.Color.R) + 1;
-                    double distanceG = (thumb.Color.G - lastThumb.Color.G) + 1;
-                    double distanceB = (thumb.Color.B - lastThumb.Color.B) + 1;
+                    double distanceR = (thumb.Color.R - lastThumb.Color.R);
+                    double distanceG = (thumb.Color.G - lastThumb.Color.G);
+                    double distanceB = (thumb.Color.B - lastThumb.Color.B);
 
                     double startR = lastThumb.Color.R;
                     double startG = lastThumb.Color.G;
@@ -226,15 +227,15 @@ namespace RasterStudio.Models
 
                     for (int i= 0; i < distancePixel; i++)
                     {
-                        double normalizedDistance = i / (distancePixel - 1);
+                        double normalizedDistance = i / (distancePixel - 1); // i va de 0 à 199, si on veut normalizer distancePixel doit être de 199
 
                         normalizedDistance = EasingTool.Interpolate(normalizedDistance, lastThumb.EasingFunction, lastThumb.EasingMode);
 
                         normalizedDistance= Math.Clamp(normalizedDistance, 0,1);
 
-                        double r = startR + (distanceR * normalizedDistance);
-                        double g = startG + (distanceG * normalizedDistance);
-                        double b = startB + (distanceB * normalizedDistance);
+                        double r = startR + Math.Round(distanceR * normalizedDistance);
+                        double g = startG + Math.Round(distanceG * normalizedDistance);
+                        double b = startB + Math.Round(distanceB * normalizedDistance);
 
                         Colors[lastThumb.Line + i] = new AtariColor((byte)r, (byte)g, (byte)b);
                     }
@@ -242,6 +243,18 @@ namespace RasterStudio.Models
 
                 lastThumb = thumb;
             }
+        }
+
+        internal void SwapColorIndex(AtariRaster selectedRaster)
+        {
+            if(selectedRaster == this)
+            {
+                return;
+            }
+
+            var temp = this.colorIndex;
+            this.ColorIndex = selectedRaster.ColorIndex;
+            selectedRaster.ColorIndex = temp;
         }
     }
 }

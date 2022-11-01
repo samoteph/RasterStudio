@@ -8,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -23,6 +24,7 @@ namespace RasterStudio.UserControls
     public sealed partial class DialogProject : UserControl
     {
         private StorageFile imageFile;
+        private StorageFile palFile;
 
         public DialogProject()
         {
@@ -48,6 +50,7 @@ namespace RasterStudio.UserControls
             {
                 case DialogActions.New:
                     c.ButtonAddImage.IsEnabled = true;
+                    c.ButtonAddPalette.IsEnabled = true;
                     c.ComboBoxPalette.IsEnabled = true;
                     c.TextBlockProjectTitle.Text = "New project";
                     c.ButtonOK.Content = "Create";
@@ -55,6 +58,7 @@ namespace RasterStudio.UserControls
                 
                 case DialogActions.Modify:
                     c.ButtonAddImage.IsEnabled = false;
+                    c.ButtonAddPalette.IsEnabled = false;
                     c.ComboBoxPalette.IsEnabled = false;
                     c.TextBlockProjectTitle.Text = "Modify projet";
                     c.ButtonOK.Content = "Modify";
@@ -146,10 +150,27 @@ namespace RasterStudio.UserControls
 
                     if (this.imageFile != null)
                     {
+                        if(this.palFile == null)
+                        {
+                            MessageDialog dialog = new MessageDialog($"The palette file is empty! Raster Studio can create is own palette from the colors of the image but, most of the time, they won't correspond to the colors of the targeted hardware machine. The tag 'Color Address' in Export dialog may show inconsistant address. Do you want to continue without the palette file?", "Palette information");
+
+                            UICommand buttonOK = new UICommand("OK");
+                            dialog.Commands.Add(buttonOK);
+                            UICommand buttonCancel = new UICommand("Cancel");
+                            dialog.Commands.Add(buttonCancel);
+
+                            var buttonResult = await dialog.ShowAsync();
+
+                            if (buttonResult == buttonCancel)
+                            {
+                                return;
+                            }
+                        }
+
                         string originalTitle = MainPage.Instance.Project.Title;
                         MainPage.Instance.Project.Title = this.TextBoxProjectName.Text;
 
-                        isLoaded = await MainPage.Instance.LoadImageAsync(this.imageFile);
+                        isLoaded = await MainPage.Instance.LoadImageAsync(this.imageFile, this.palFile);
 
                         if (isLoaded == false)
                         {
@@ -186,6 +207,21 @@ namespace RasterStudio.UserControls
                     this.IsOpen = false;
 
                     break;
+            }
+        }
+
+        private async void ButtonAddPalette_Click(object sender, RoutedEventArgs e)
+        {
+            var picker = new Windows.Storage.Pickers.FileOpenPicker();
+            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
+            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary;
+            picker.FileTypeFilter.Add(".pal");
+
+            this.palFile = await picker.PickSingleFileAsync();
+
+            if (this.palFile != null)
+            {
+                this.TextBoxPaletteFilename.Text = this.palFile.Path;
             }
         }
     }

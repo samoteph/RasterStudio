@@ -13,12 +13,14 @@ namespace RasterStudio.UserControls
     public sealed partial class ColorSelectorControl : UserControl
     {
         private AtariPalette palette;
+        private PaletteControl paletteControl;
 
-        public ColorSelectorControl(AtariPalette palette)
+        public ColorSelectorControl(AtariPalette palette, PaletteControl paletteControl)
         {
             this.InitializeComponent();
 
             this.palette = palette;
+            this.paletteControl = paletteControl;
         }
 
         public AtariColor Color
@@ -90,5 +92,23 @@ namespace RasterStudio.UserControls
 
             cc.GlyphRasterThumbDefined.Visibility = ((bool)e.NewValue) ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        /*
+        private void MenuFlyoutItemSwap_Click(object sender, RoutedEventArgs e)
+        {
+            var project = MainPage.Instance.Project;
+
+            if ( colorIndex != project.SelectedRasterIndex)
+            {
+                var raster = project.Rasters[colorIndex];
+
+                var temp = this.ColorIndex;
+
+                this.ColorIndex = project.SelectedRasterIndex;
+                this.paletteControl.GetColorSelectorControl(project.SelectedRasterIndex).ColorIndex = temp;
+
+                MainPage.Instance.InitializeRasters(project.Image);
+            }
+        }*/
     }
 }

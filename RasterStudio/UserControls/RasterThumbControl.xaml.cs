@@ -125,7 +125,7 @@ namespace RasterStudio.UserControls
         private void DisplayRasterThumbLine(RasterThumb rasterThumb)
         {
             this.TextBlockLine.Text = ((int)rasterThumb.Line).ToString();
-            Canvas.SetTop(this, (this.RasterThumb.Line * this.heightCanvas) / 200);
+            Canvas.SetTop(this, (this.RasterThumb.Line * this.heightCanvas) / MainPage.Instance.Project.Image.Height);
         }
 
         private void DisplayRasterThumbColor(RasterThumb rasterThumb)
@@ -157,7 +157,7 @@ namespace RasterStudio.UserControls
         public void RefreshPositionInCanvas(double heightCanvas)
         {
             this.heightCanvas = heightCanvas;
-            Canvas.SetTop(this, (this.RasterThumb.Line * this.heightCanvas) / 200);
+            Canvas.SetTop(this, (this.RasterThumb.Line * this.heightCanvas) / MainPage.Instance.Project.Image.Height);
         }
     }
 }

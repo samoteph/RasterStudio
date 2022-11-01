@@ -94,6 +94,11 @@ namespace RasterStudio.UserControls
             selector.HaveRasterThumbDefined = haveRasterThumbDefined;
         }
 
+        public ColorSelectorControl GetColorSelectorControl(int colorIndex)
+        {
+            return this.GridPalette.Children[colorIndex] as ColorSelectorControl;
+        }
+
         private void CreateColorControls(AtariPalette value)
         {
             this.GridPalette.Children.Clear();
@@ -110,7 +115,7 @@ namespace RasterStudio.UserControls
                         }
                     );
 
-                    var colorControl = new ColorSelectorControl(value) { ColorIndex = i };
+                    var colorControl = new ColorSelectorControl(value, this) { ColorIndex = i };
 
                     colorControl.Tapped += OnColorControlTapped;
 

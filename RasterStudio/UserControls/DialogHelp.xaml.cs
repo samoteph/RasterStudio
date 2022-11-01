@@ -41,7 +41,7 @@ namespace RasterStudio.UserControls
             this.DialogContainer.Visibility = Visibility.Collapsed;
 
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(100);
+            timer.Interval = TimeSpan.FromMilliseconds(50);
         
             this.ScrollViewer.PointerPressed += OnScrollViewerPointerPressed;
             this.ScrollViewer.PointerReleased += OnScrollViewerPointerReleased;
@@ -53,6 +53,7 @@ namespace RasterStudio.UserControls
         {
             await audioPlayer.InitializeAsync();
             await audioPlayer.AddSoundFromApplicationAsync(MyAudioKeys.Loop, "ms-appx:///Assets/Mp3/WB.mp3");
+            audioPlayer.Volume = 0.25;
         }
 
         private void OnScrollViewerPointerPressed(object sender, PointerRoutedEventArgs e)

@@ -26,6 +26,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Net.WebRequestMethods;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -36,6 +37,8 @@ namespace RasterStudio
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private StorageFile extensionFile;
+
         public static MainPage Instance
         {
             get;
@@ -72,6 +75,24 @@ namespace RasterStudio
             this.AtariImageControl.DisplayBlankScreen = false;
             this.AtariImageControl.DisplayAllRasters = true;
             this.AtariImageControl.Project = this.project;
+        }
+
+        // Pour la gestion de l'association de fichier .HBL
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            
+            var args = e.Parameter as Windows.ApplicationModel.Activation.IActivatedEventArgs;
+            
+            if (args != null)
+            {
+                if (args.Kind == Windows.ApplicationModel.Activation.ActivationKind.File)
+                {
+                    var fileArgs = args as Windows.ApplicationModel.Activation.FileActivatedEventArgs;
+                    this.extensionFile = fileArgs.Files[0] as StorageFile;
+                }
+            }
         }
 
         public RasterThumb SelectedRasterThumb
@@ -208,7 +229,29 @@ namespace RasterStudio
 
         private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
+            this.AtariImageControl.Visibility = Visibility.Collapsed;
+
             await LoadEmptyProjectAsync();
+
+            if(this.extensionFile != null)
+            {
+                try
+                {
+                    await this.project.LoadProjectAsync(this.extensionFile);
+
+                    this.AtariImageControl.LoadImage(this.project.Image);
+
+                    this.SetTitleBar();
+                    this.SelectRaster(this.project.SelectedRasterIndex);
+                }
+                catch (Exception ex)
+                {
+                    MessageDialog dialog = new MessageDialog($"An error occured during the loading of the projet!\n\n{ex.Message}", "Loading project");
+                    await dialog.ShowAsync();
+                }
+            }
+
+            this.AtariImageControl.Visibility = Visibility.Visible;
         }
 
         public async Task LoadEmptyProjectAsync()
@@ -218,14 +261,14 @@ namespace RasterStudio
             // Chargement du fichier
             var file = await StorageFile.GetFileFromApplicationUriAsync(uriSource);
 
-            await LoadImageAsync(file);
+            await LoadImageAsync(file, null);
         }
 
-        public async Task<bool> LoadImageAsync(StorageFile file)
+        public async Task<bool> LoadImageAsync(StorageFile imageFile, StorageFile paletteFile)
         {
             try
             {
-                await this.AtariImageControl.LoadImageAsync(file);
+                await this.AtariImageControl.LoadImageAsync(imageFile, paletteFile);
 
                 // démarrage des Rasters
                 this.InitializeRasters(this.project.Image);
@@ -245,7 +288,7 @@ namespace RasterStudio
             return false;
         }
 
-        private void InitializeRasters(AtariImage image)
+        internal void InitializeRasters(AtariImage image)
         {
             this.project.Rasters = new AtariRaster[this.project.Image.Palette.Length];
 
@@ -404,6 +447,8 @@ namespace RasterStudio
             try
             {
                 await this.project.LoadProjectAsync();
+
+                this.AtariImageControl.LoadImage(this.project.Image);
 
                 this.SetTitleBar();
 

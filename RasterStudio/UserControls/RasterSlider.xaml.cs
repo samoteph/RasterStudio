@@ -112,7 +112,7 @@ namespace RasterStudio.UserControls
 
                     if (y >= 0 && y < heightCanvas)
                     {
-                        this.SelectedRasterThumb.Line = (int)(200 * y / heightCanvas);
+                        this.SelectedRasterThumb.Line = (int)(MainPage.Instance.Project.Image.Height * y / heightCanvas);
                     }
                 }
             }

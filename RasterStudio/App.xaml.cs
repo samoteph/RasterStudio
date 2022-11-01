@@ -34,6 +34,17 @@ namespace RasterStudio
             App.Current.RequestedTheme = ApplicationTheme.Dark;
         }
 
+        protected override void OnFileActivated(FileActivatedEventArgs args)
+        {
+            //* when opened by file-extension
+            base.OnFileActivated(args);
+
+            var rootFrame = new Frame();
+            rootFrame.Navigate(typeof(MainPage), args);
+            Window.Current.Content = rootFrame;
+            Window.Current.Activate();
+        }
+
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.

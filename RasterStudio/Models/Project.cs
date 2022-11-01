@@ -39,7 +39,7 @@ namespace RasterStudio.Models
             {
                 if(this.filename == null)
                 {
-                    this.filename = this.title + ".ras";
+                    this.filename = this.title + ".hbl";
                 }
                 
                 return this.filename;
@@ -104,6 +104,23 @@ namespace RasterStudio.Models
             }
         }
 
+        public void SwapRasterWithSelected(AtariRaster raster)
+        {
+            int indexOf = raster.ColorIndex;
+
+            if(indexOf != -1 && indexOf != this.SelectedRasterIndex)
+            {
+                var selectedIndexOf = this.SelectedRasterIndex;
+                var selectedRaster = this.SelectedRaster;
+
+                this.Rasters[indexOf].SwapColorIndex(this.SelectedRaster);
+                //SelectedRasterIndex = indexOf;
+
+                this.Rasters[selectedIndexOf] = this.Rasters[indexOf];
+                this.Rasters[indexOf] = selectedRaster;
+            }
+        }
+
         public string Title 
         {
             get
@@ -161,7 +178,7 @@ namespace RasterStudio.Models
             var savePicker = new Windows.Storage.Pickers.FileSavePicker();
             savePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
             // Dropdown of file types the user can save the file as
-            savePicker.FileTypeChoices.Add("Raster Studio Project file", new List<string>() { ".ras" });
+            savePicker.FileTypeChoices.Add("Raster Studio Project file", new List<string>() { ".hbl" });
             // Default file name if the user does not type one in or select a file to replace
             savePicker.SuggestedFileName = this.Filename;
 
@@ -228,7 +245,7 @@ namespace RasterStudio.Models
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
             picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
             picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
-            picker.FileTypeFilter.Add(".ras");
+            picker.FileTypeFilter.Add(".hbl");
 
             Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
 
