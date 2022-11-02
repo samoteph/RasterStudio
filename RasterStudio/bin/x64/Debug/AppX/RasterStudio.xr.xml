@@ -8,9 +8,13 @@
     <RootPropertyPathName Name="SelectedItem" />
     <RootPropertyPathName Name="IsEditable" />
     <RootPropertyPathName Name="Name" />
+    <RootPropertyPathName Name="FooterTextCommand" />
+    <RootPropertyPathName Name="ColorTextCommand" />
+    <RootPropertyPathName Name="HeaderTextCommand" />
     <RootPropertyPathName Name="EasingFunction" />
     <RootPropertyPathName Name="Line" />
     <RootPropertyPathName Name="Color32" />
+    <RootPropertyPathName Name="TextCommand" />
   </Roots.PropertyPathNames>
   <Roots.RootTypes>
     <RootType FullName="Windows.UI.Xaml.Application">
@@ -313,12 +317,17 @@
       <RootProperty Name="Margin" />
       <RootProperty Name="BorderBrush" />
     </RootType>
-    <RootType FullName="RasterStudio.UserControls.ExportRastersControl">
-      <RootEvent Name="TextChanged" />
-      <RootEvent Name="SelectorChanged" />
+    <RootType FullName="Windows.UI.Xaml.Controls.ItemsControl">
+      <RootProperty Name="ItemTemplate" />
+      <RootProperty Name="ItemsPanel" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.DataTemplate">
       <RootProperty Name="Template" />
+    </RootType>
+    <RootType FullName="RasterStudio.UserControls.ExportRastersControl">
+      <RootProperty Name="RasterExporter" />
+      <RootEvent Name="TextChanged" />
+      <RootEvent Name="SelectorChanged" />
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.StaticResourceExtension" />
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.BindExtension">
@@ -349,10 +358,6 @@
     </RootType>
     <RootType FullName="RasterStudio.UserControls.RasterThumbControl" />
     <RootType FullName="RasterStudio.UserControls.RGBColorControl" />
-    <RootType FullName="Windows.UI.Xaml.Controls.ItemsControl">
-      <RootProperty Name="ItemsPanel" />
-      <RootProperty Name="ItemTemplate" />
-    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ItemsPanelTemplate">
       <RootProperty Name="Template" />
     </RootType>

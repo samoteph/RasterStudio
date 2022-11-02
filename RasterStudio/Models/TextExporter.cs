@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,107 @@ namespace RasterStudio.Models
         {
             get;
             private set;
+        }
+
+        public ObservableCollection<TextRasterExporter> TextRasterExporters
+        {
+            get;
+            private set;
+        } = new ObservableCollection<TextRasterExporter>();
+
+        public Project Project
+        {
+            get;
+            private set;
+        }
+
+        public TextExporter(Project project)
+        {
+            this.Project = project;
+
+            this.PaletteHeaderTagManager = new TagManager();
+            this.PaletteHeaderTagManager.AddTag(new Tag("Filename", () => MainPage.Instance.Project.Filename));
+            this.PaletteHeaderTagManager.AddTag(new Tag("Year", () => DateTime.Now.Year.ToString()));
+            this.PaletteHeaderTagManager.AddTag(new Tag("Month", () => DateTime.Now.Month.ToString()));
+            this.PaletteHeaderTagManager.AddTag(new Tag("Day", () => DateTime.Now.Day.ToString()));
+
+            this.PaletteFooterTagManager = new TagManager(this.PaletteHeaderTagManager);
+
+            // par defaut il y a un element
+            this.TextRasterExporters.Add(new TextRasterExporter(this));
+        }
+
+        public string GetExportText()
+        {
+            var rasters = this.Project.Rasters;
+
+            if(rasters == null)
+            {
+                return null;
+            }
+
+            StringBuilder builder = new StringBuilder();
+
+            // Affchage du header
+
+            BuilderAppendLine(builder, this.PaletteHeaderTagManager);
+
+            foreach (var rasterExporter in this.TextRasterExporters)
+            {
+                rasterExporter.GetExportText(builder);
+            }
+
+            BuilderAppendLine(builder, this.PaletteFooterTagManager);
+
+            return builder.ToString();
+        }
+
+        private void BuilderAppendLine(StringBuilder builder, TagManager tagRasterManager)
+        {
+            string text = tagRasterManager.ReplaceText();
+
+            if (string.IsNullOrWhiteSpace(text) == false)
+            {
+                builder.AppendLine(text);
+            }
+        }
+
+        internal List<AtariRaster> GetUsedRasters()
+        {
+            List<AtariRaster> selectedRasters = new List<AtariRaster>();
+
+            foreach (var raster in this.Project.Rasters)
+            {
+                if (MainPage.Instance.IsRasterColorModified(raster.ColorIndex) == true)
+                {
+                    selectedRasters.Add(raster);
+                }
+            }
+
+            return selectedRasters;
+        }
+    }
+
+    public class TextRasterExporter
+    {
+        private Project project;
+        private TextExporter exporter;
+
+        public TextRasterExporter(TextExporter exporter)
+        {
+            this.project = exporter.Project;
+            this.exporter = exporter;
+
+            this.RasterLineHeaderTagManager = new TagRasterManager();
+            this.RasterLineHeaderTagManager.AddTag(new TagRaster("Raster Line", (parameter) => parameter.line.ToString()));
+            this.RasterLineFooterTagManager = new TagRasterManager(this.RasterLineHeaderTagManager);
+
+            this.RasterColorTagManager = new TagRasterManager();
+            this.RasterColorTagManager.AddTag(new TagRaster("Color Address", (parameter) => parameter.raster.ColorAddress));
+            this.RasterColorTagManager.AddTag(new TagRaster("Color Index", (parameter) => parameter.raster.ColorIndex.ToString()));
+            this.RasterColorTagManager.AddTag(new TagRaster("Color Hexa Value", (parameter) => parameter.raster.Colors[parameter.line].Color.ToString("x4")));
+            this.RasterColorTagManager.AddTag(new TagRaster("Raster Line", (parameter) => parameter.line.ToString()));
+            this.RasterColorTagManager.AddTag(new TagRaster("Separator", (parameter) => parameter.isLastColor ? String.Empty : this.Separator));
         }
 
         public TagRasterManager RasterLineHeaderTagManager
@@ -62,55 +164,13 @@ namespace RasterStudio.Models
             set;
         } = ",";
 
-        public Project Project
+        public void GetExportText(StringBuilder builder)
         {
-            get;
-            private set;
-        }
+            var rasters = this.project.Rasters;
 
-        public TextExporter(Project project)
-        {
-            this.Project = project;
-
-            this.PaletteHeaderTagManager = new TagManager();
-            this.PaletteHeaderTagManager.AddTag(new Tag("Filename", () => MainPage.Instance.Project.Filename));
-            this.PaletteHeaderTagManager.AddTag(new Tag("Year", () => DateTime.Now.Year.ToString()));
-            this.PaletteHeaderTagManager.AddTag(new Tag("Month", () => DateTime.Now.Month.ToString()));
-            this.PaletteHeaderTagManager.AddTag(new Tag("Day", () => DateTime.Now.Day.ToString()));
-
-            this.PaletteFooterTagManager = new TagManager(this.PaletteHeaderTagManager);
-
-            this.RasterLineHeaderTagManager = new TagRasterManager();
-            this.RasterLineHeaderTagManager.AddTag(new TagRaster("Raster Line", (parameter) => parameter.line.ToString()));
-
-            this.RasterLineFooterTagManager = new TagRasterManager(this.RasterLineHeaderTagManager);
-
-            this.RasterColorTagManager = new TagRasterManager();
-            this.RasterColorTagManager.AddTag(new TagRaster("Color Address", (parameter) => parameter.raster.ColorAddress));
-            this.RasterColorTagManager.AddTag(new TagRaster("Color Index", (parameter) => parameter.raster.ColorIndex.ToString()));
-            this.RasterColorTagManager.AddTag(new TagRaster("Color Hexa Value", (parameter) => parameter.raster.Colors[parameter.line].Color.ToString("x4")));
-            this.RasterColorTagManager.AddTag(new TagRaster("Raster Line", (parameter) => parameter.line.ToString()));
-            this.RasterColorTagManager.AddTag(new TagRaster("Separator", (parameter) => parameter.isLastColor ? String.Empty : this.Separator));
-        }
-
-        public string GetExportText()
-        {
-            var rasters = this.Project.Rasters;
-
-            if(rasters == null)
-            {
-                return null;
-            }
-
-            StringBuilder builder = new StringBuilder();
-
-            // Affchage du header
-
-            BuilderAppendLine(builder, this.PaletteHeaderTagManager);
-            
             List<AtariRaster> usedRasters = null;
             List<int> changingLines = new List<int>(200);
-            
+
             // LineSelector.All
             int lineCount = rasters[0].Colors.Length;
 
@@ -118,7 +178,7 @@ namespace RasterStudio.Models
             // On change LineCount si lineSelector.Changing + on remplie lineChanges
             if (this.LineSelector == LineSelector.Changing)
             {
-                usedRasters = this.GetUsedRasters();
+                usedRasters = this.exporter.GetUsedRasters();
 
                 for (int l = 0; l < lineCount; l++)
                 {
@@ -159,7 +219,7 @@ namespace RasterStudio.Models
 
                     if (usedRasters == null)
                     {
-                        selectedRasters = this.GetUsedRasters();
+                        selectedRasters = this.exporter.GetUsedRasters();
                     }
                     else
                     {
@@ -170,13 +230,13 @@ namespace RasterStudio.Models
 
             int oldLine = 0;
             int line = 0;
-            
+
             for (int i = 0; i < lineCount; i++)
             {
                 oldLine = line;
                 line = i;
 
-                if(changingLines.Count > 0)
+                if (changingLines.Count > 0)
                 {
                     line = changingLines[i];
                 }
@@ -192,7 +252,7 @@ namespace RasterStudio.Models
                 // Determiner la dernière ligne (relou de faire tout ca en avance mais pas le choix car on ne peut pas le faire pendant l'affichage (effectué en dessous)
                 if (ColorSelector == ColorSelector.Changing)
                 {
-                    for ( int r = 0; r < selectedRasters.Count; r++)
+                    for (int r = 0; r < selectedRasters.Count; r++)
                     {
                         if (ColorSelector == ColorSelector.Changing)
                         {
@@ -227,14 +287,14 @@ namespace RasterStudio.Models
 
                     var raster = selectedRasters[r];
 
-                    if(ColorSelector == ColorSelector.Changing)
+                    if (ColorSelector == ColorSelector.Changing)
                     {
-                        if(selectedRasters.Count > 1)
+                        if (selectedRasters.Count > 1)
                         {
                             var oldColor = selectedRasters[r].Colors[oldLine].Color;
                             var newColor = selectedRasters[r].Colors[line].Color;
-                        
-                            if(oldColor == newColor)
+
+                            if (oldColor == newColor)
                             {
                                 continue;
                             }
@@ -248,16 +308,12 @@ namespace RasterStudio.Models
                 }
 
                 BuilderAppendWithOrientation(builder, this.RasterLineFooterTagManager);
-            
-                if(this.OrientationSelector == OrientationSelector.Horizontal)
+
+                if (this.OrientationSelector == OrientationSelector.Horizontal)
                 {
                     builder.AppendLine();
                 }
             }
-
-            BuilderAppendLine(builder, this.PaletteFooterTagManager);
-
-            return builder.ToString();
         }
 
         private void BuilderAppendWithOrientation(StringBuilder builder, TagRasterManager tagRasterManager)
@@ -276,32 +332,8 @@ namespace RasterStudio.Models
                 }
             }
         }
-
-        private void BuilderAppendLine(StringBuilder builder, TagManager tagRasterManager)
-        {
-            string text = tagRasterManager.ReplaceText();
-
-            if (string.IsNullOrWhiteSpace(text) == false)
-            {
-                builder.AppendLine(text);
-            }
-        }
-
-        private List<AtariRaster> GetUsedRasters()
-        {
-            List<AtariRaster> selectedRasters = new List<AtariRaster>();
-
-            foreach (var raster in this.Project.Rasters)
-            {
-                if (MainPage.Instance.IsRasterColorModified(raster.ColorIndex) == true)
-                {
-                    selectedRasters.Add(raster);
-                }
-            }
-
-            return selectedRasters;
-        }
     }
+
     public enum LineSelector
     {
         All,

@@ -85,6 +85,9 @@ namespace RasterStudio.UserControls
             this.TagTextBoxHeader.TextCommand = exporter.PaletteHeader.TextCommand;
             this.TagTextBoxFooter.TextCommand = exporter.PaletteFooter.TextCommand;
 
+            this.ItemsControlRastersControl.ItemsSource = project.Exporter.TextRasterExporters;
+
+            /*
             this.ExportRasterControl.HeaderTextCommand = exporter.PaletteRaster.HeaderTextCommand;
             this.ExportRasterControl.FooterTextCommand = exporter.PaletteRaster.FooterTextCommand;
             this.ExportRasterControl.ColorTextCommand = exporter.PaletteRaster.ColorTextCommand;
@@ -93,6 +96,7 @@ namespace RasterStudio.UserControls
             this.ExportRasterControl.OrientationSelector = exporter.OrientationSelector;
             this.ExportRasterControl.Separator = exporter.Separator;
             this.ExportRasterControl.ColorSelector = exporter.ColorSelector;
+            */
 
             this.TextBoxExtension.Text = exporter.Extension ?? String.Empty;
         }

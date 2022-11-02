@@ -27,6 +27,8 @@ namespace RasterStudio.UserControls
         {
             this.InitializeComponent();
 
+            this.LayoutRoot.DataContext = this;
+
             this.TextBox.TextChanged += OnTextChanged;
             
         }
@@ -56,6 +58,8 @@ namespace RasterStudio.UserControls
             set
             {
                 this.tagManager = value;
+
+                this.TextCommand = value.TextCommand ?? String.Empty; 
                 this.ItemsControlTags.ItemsSource = value.GetTags();
             }
         }
@@ -92,7 +96,7 @@ namespace RasterStudio.UserControls
                 builder.Append(tag.TextCommand);
             }
 
-            this.TextBox.Text = builder.ToString();
+            this.TextCommand = builder.ToString();
 
             this.TextBox.Focus(FocusState.Programmatic);
 
@@ -119,6 +123,26 @@ namespace RasterStudio.UserControls
 
         // Using a DependencyProperty as the backing store for TextCommand.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TextCommandProperty =
-            DependencyProperty.Register("TextCommand", typeof(string), typeof(TagTextBox), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("TextCommand", typeof(string), typeof(TagTextBox), new PropertyMetadata(string.Empty, OnTextCommandChanged));
+
+        private static void OnTextCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+        }
+
+        /*
+        public string TextCommand
+        {
+            get
+            {
+                return this.TextBox.Text;
+            }
+
+            set
+            {
+                this.TextBox.Text = value;
+            }
+        }
+        */
+
     }
 }

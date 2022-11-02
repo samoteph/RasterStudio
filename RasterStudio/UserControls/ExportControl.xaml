@@ -85,7 +85,13 @@
                     </Grid.ColumnDefinitions>
                     <Border  HorizontalAlignment="Center" Width="2" Background="#1f1f1f" Margin="0,0,0,5"></Border>
 
-                    <local:ExportRastersControl x:Name="ExportRasterControl" Grid.Column="1" TextChanged="TagTextBox_TextChanged" SelectorChanged="ExportRastersControl_SelectorChanged"/>
+                    <ItemsControl Grid.Column="1" x:Name="ItemsControlRastersControl">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:ExportRastersControl RasterExporter="{Binding}"  TextChanged="TagTextBox_TextChanged"  SelectorChanged="ExportRastersControl_SelectorChanged"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
 
                 </Grid>
                 

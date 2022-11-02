@@ -25,12 +25,7 @@ namespace RasterStudio.UserControls
         {
             this.InitializeComponent();
 
-            this.TagTextBoxHeader.TagManager = MainPage.Instance.Project.Exporter.RasterLineHeaderTagManager;
-            this.TagTextBoxFooter.TagManager = MainPage.Instance.Project.Exporter.RasterLineFooterTagManager;
-            this.TagTextBoxRasters.TagManager = MainPage.Instance.Project.Exporter.RasterColorTagManager;
-
-            // initialisation
-            this.TextBoxSeparator.Text = MainPage.Instance.Project.Exporter.Separator;
+            this.LayoutRoot.DataContext = this;
 
             this.ComboBoxLines.SelectionChanged += OnLineSelectionChanged;
             this.ComboBoxColors.SelectionChanged += OnColorSelectionChanged;
@@ -38,9 +33,38 @@ namespace RasterStudio.UserControls
             this.TextBoxSeparator.TextChanged += OnSeparatorTextChanged;
         }
 
+
+
+        public TextRasterExporter RasterExporter
+        {
+            get { return (TextRasterExporter)GetValue(RasterExporterProperty); }
+            set { SetValue(RasterExporterProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for RasterExporter.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty RasterExporterProperty =
+            DependencyProperty.Register("RasterExporter", typeof(TextRasterExporter), typeof(ExportRastersControl), new PropertyMetadata(null, OnRasterExporterChanged));
+
+        private static void OnRasterExporterChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var c = d as ExportRastersControl;
+            var textRasterExporter = e.NewValue as TextRasterExporter;
+
+            c.TagTextBoxHeader.TagManager = textRasterExporter.RasterLineHeaderTagManager;
+            c.TagTextBoxFooter.TagManager = textRasterExporter.RasterLineFooterTagManager;
+            c.TagTextBoxRasters.TagManager = textRasterExporter.RasterColorTagManager;
+
+            // initialisation
+            c.Separator = textRasterExporter.Separator;
+            
+            c.LineSelector = textRasterExporter.LineSelector;
+            c.ColorSelector = textRasterExporter.ColorSelector;
+            c.OrientationSelector = textRasterExporter.OrientationSelector;
+        }
+
         private void OnSeparatorTextChanged(object sender, TextChangedEventArgs e)
         {
-            MainPage.Instance.Project.Exporter.Separator = this.TextBoxSeparator.Text;
+            this.RasterExporter.Separator = this.TextBoxSeparator.Text;
             SelectorChanged?.Invoke(this, EventArgs.Empty);
         }
 
@@ -48,7 +72,7 @@ namespace RasterStudio.UserControls
         {
             var item = (this.ComboBoxLines.SelectedItem as ComboBoxItem);
 
-            MainPage.Instance.Project.Exporter.LineSelector = (string)item.Tag == "All" ? LineSelector.All : LineSelector.Changing;
+            this.RasterExporter.LineSelector = (string)item.Tag == "All" ? LineSelector.All : LineSelector.Changing;
             
             SelectorChanged?.Invoke(this,EventArgs.Empty);
         }
@@ -60,13 +84,13 @@ namespace RasterStudio.UserControls
             switch((string)item.Tag)
             {
                 case "All":
-                    MainPage.Instance.Project.Exporter.ColorSelector = ColorSelector.All;
+                    this.RasterExporter.ColorSelector = ColorSelector.All;
                     break;
                 case "Used":
-                    MainPage.Instance.Project.Exporter.ColorSelector = ColorSelector.Used;
+                    this.RasterExporter.ColorSelector = ColorSelector.Used;
                     break;
                 case "Changing":
-                    MainPage.Instance.Project.Exporter.ColorSelector = ColorSelector.Changing;
+                    this.RasterExporter.ColorSelector = ColorSelector.Changing;
                     break;
             }
 
@@ -76,8 +100,8 @@ namespace RasterStudio.UserControls
         private void OnOrientationChanged(object sender, SelectionChangedEventArgs e)
         {
             var item = (this.ComboBoxOrientation.SelectedItem as ComboBoxItem);
-            
-            MainPage.Instance.Project.Exporter.OrientationSelector = ((string)item.Tag) == "Horizontal" ? OrientationSelector.Horizontal : OrientationSelector.Vertical;
+
+            this.RasterExporter.OrientationSelector = ((string)item.Tag) == "Horizontal" ? OrientationSelector.Horizontal : OrientationSelector.Vertical;
             SelectorChanged?.Invoke(this, EventArgs.Empty);
         }
 

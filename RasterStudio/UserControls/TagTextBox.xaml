@@ -11,7 +11,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <StackPanel Grid.Row="2" Grid.Column="0">
+    <StackPanel x:Name="LayoutRoot" Grid.Row="2" Grid.Column="0">
         <Grid Margin="0,0,0,10" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -39,9 +39,11 @@
                 </ItemsControl>
         </ScrollViewer>
 
-        <TextBox x:Name="TextBox" Text="{x:Bind TextCommand, Mode=TwoWay}" Margin="0,10,0,10" Height="70" HorizontalAlignment="Stretch" FontSize="13" BorderThickness="0.5" AcceptsReturn="True" TextWrapping="Wrap"/>
-                
-        
+        <TextBox x:Name="TextBox" Text="{Binding TextCommand, Mode=TwoWay}" Margin="0,10,0,10" Height="70" HorizontalAlignment="Stretch" FontSize="13" BorderThickness="0.5" AcceptsReturn="True" TextWrapping="Wrap"/>
+
+        <!--
+        <TextBox x:Name="TextBox" Margin="0,10,0,10" Height="70" HorizontalAlignment="Stretch" FontSize="13" BorderThickness="0.5" AcceptsReturn="True" TextWrapping="Wrap"/>
+        -->
         
     </StackPanel>
 </UserControl>
