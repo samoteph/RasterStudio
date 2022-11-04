@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
@@ -620,6 +621,11 @@ namespace RasterStudio
             }
 
             this.AtariImageControl.DrawAllRastersOnScreen();
+        }
+
+        private async void MenuFlyoutItemMiniTutorial_Click(object sender, RoutedEventArgs e)
+        {
+            await Launcher.LaunchUriAsync(new Uri("https://youtu.be/aDYlDO2EoBg"));
         }
     }
 }

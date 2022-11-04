@@ -1,2 +1,2 @@
-MainPackage=C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x86\Release\RasterStudio_1.0.3.0_x86.msix
-SymbolPackage=C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\obj\x86\Release\Symbols\RasterStudio_1.0.3.0_x86.appxsym
+MainPackage=C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x86\Release\RasterStudio_1.0.4.0_x86.msix
+SymbolPackage=C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\obj\x86\Release\Symbols\RasterStudio_1.0.4.0_x86.appxsym

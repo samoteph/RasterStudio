@@ -50,6 +50,7 @@
                             <!--<ToggleMenuFlyoutItem Text="Blank screen" Click="MenuItemBlankScreen_Click"/>-->
                         </MenuBarItem>
                         <MenuBarItem Title="Help">
+                            <MenuFlyoutItem Text="Mini tutorial" Width="200" Click="MenuFlyoutItemMiniTutorial_Click"/>
                             <MenuFlyoutItem Text="About Raster Studio" Width="200" Click="MenuFlyoutItemHelp_Click"/>
                         </MenuBarItem>
                     </MenuBar>
