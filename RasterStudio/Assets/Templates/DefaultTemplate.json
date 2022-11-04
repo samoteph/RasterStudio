@@ -5,31 +5,92 @@
     "Extension": ".s",
     "PaletteHeader": { "TextCommand": "HBL:" },
     "PaletteFooter": { "TextCommand": null },
-    "PaletteRaster": {
-      "HeaderTextCommand": "\tdc.w @rasterline@,",
-      "ColorTextCommand": "$@colorhexavalue@,",
-      "FooterTextCommand": "-1"
-    },
-    "LineSelector": 1,
-    "ColorSelector": 2,
-    "OrientationSelector": 1,
-    "Separator": ","
+    "TemplateRasterExporters": [
+      {
+        "PaletteRaster": {
+          "HeaderTextCommand": "\tdc.w @#line@,",
+          "ColorTextCommand": "$@colorhexavalue@,",
+          "FooterTextCommand": "-1"
+        },
+        "LineSelector": 1,
+        "ColorSelector": 2,
+        "OrientationSelector": 1,
+        "Separator": ","
+      }
+    ]
   },
+  {
+    "Name": "ASM DevPac Code",
+    "IsEditable": false,
+    "Extension": ".s",
+    "PaletteHeader": { "TextCommand": "VBL_@label@:" },
+    "PaletteFooter": { "TextCommand": null },
+    "TemplateRasterExporters": [
+      {
+        "PaletteRaster": {
+          "HeaderTextCommand": "        clr.b $fffffa1b.w                              ; stop Timer B\r        move.b  #@#diffchangingline@,$fffffa21.w                   ; next HBL\r        move.l  #Raster@#nextchangingline@,$120.w                ; timer B interrupt vectors\r        move.b  #$8,$fffffa1b.w                 ; start Timer B",
+          "ColorTextCommand": "        move.w  #$@colorhexavalue@,$@coloraddress@.w                 ; init colorIdx#@colorindex@",
+          "FooterTextCommand": "        rte"
+        },
+        "LineSelector": 2,
+        "ColorSelector": 1,
+        "OrientationSelector": 0,
+        "Separator": ","
+      },
+      {
+        "PaletteRaster": {
+          "HeaderTextCommand": "Raster@#line@:\r        clr.b   $fffffa1b.w                       ; stop Timer B",
+          "ColorTextCommand": "        move.w  #$@colorhexavalue@,$@coloraddress@.w                 ; change color IDx#@colorindex@",
+          "FooterTextCommand": "        move.b  #@#diffchangingline@,$fffffa21.w                   ; next TB IT in 50 lines\r        move.b  #8,$fffffa1b.w                    ; start timer B\r        move.l  #Raster@#nextchangingline@,$120.w\r        rte"
+        },
+        "LineSelector": 3,
+        "ColorSelector": 2,
+        "OrientationSelector": 0,
+        "Separator": ","
+      },
+      {
+        "PaletteRaster": {
+          "HeaderTextCommand": "Raster@#line@:\r        clr.b   $fffffa1b.w                       ; stop Timer B",
+          "ColorTextCommand": "        move.w  #$@colorhexavalue@,$@coloraddress@.w                 ; change color IDx#2",
+          "FooterTextCommand": "        rte\r"
+        },
+        "LineSelector": 4,
+        "ColorSelector": 2,
+        "OrientationSelector": 0,
+        "Separator": ","
+      }
+    ]
+  },  
   {
     "Name": "CSV",
     "IsEditable": false,
     "Extension": ".csv",
     "PaletteHeader": { "TextCommand": null },
     "PaletteFooter": { "TextCommand": null },
-    "PaletteRaster": {
-      "HeaderTextCommand": null,
-      "ColorTextCommand": "$@colorhexavalue@@separator@",
-      "FooterTextCommand": null
-    },
-    "LineSelector": 1,
-    "ColorSelector": 1,
-    "OrientationSelector": 1,
-    "Separator": ","
+    "TemplateRasterExporters": [
+      {
+        "PaletteRaster": {
+          "HeaderTextCommand": null,
+          "ColorTextCommand": "@colorindex@@separator@",
+          "FooterTextCommand": null
+        },
+        "LineSelector": 2,
+        "ColorSelector": 0,
+        "OrientationSelector": 1,
+        "Separator": ","
+      },
+      {
+        "PaletteRaster": {
+          "HeaderTextCommand": null,
+          "ColorTextCommand": "$@colorhexavalue@@separator@",
+          "FooterTextCommand": null
+        },
+        "LineSelector": 0,
+        "ColorSelector": 0,
+        "OrientationSelector": 1,
+        "Separator": ","
+      }
+    ]
   },
   {
     "Name": "Empty Template",

@@ -256,12 +256,24 @@ namespace RasterStudio
 
         public async Task LoadEmptyProjectAsync()
         {
+            /*
             // Lecture de l'image
             var uriSource = new Uri("ms-appx:///Assets/ScreenShots/MBIDL.png");
             // Chargement du fichier
             var file = await StorageFile.GetFileFromApplicationUriAsync(uriSource);
 
             await LoadImageAsync(file, null);
+            */
+
+            var uriSource = new Uri("ms-appx:///Assets/Projects/Default.hbl");
+            var projectFile = await StorageFile.GetFileFromApplicationUriAsync(uriSource);
+            
+            await this.project.LoadProjectAsync(projectFile);
+
+            this.AtariImageControl.LoadImage(this.project.Image);
+
+            this.SetTitleBar();
+            this.SelectRaster(this.project.SelectedRasterIndex);
         }
 
         public async Task<bool> LoadImageAsync(StorageFile imageFile, StorageFile paletteFile)
@@ -580,6 +592,34 @@ namespace RasterStudio
         private void MenuFlyoutItemHelp_Click(object sender, RoutedEventArgs e)
         {
             this.ContentDialogHelp.IsOpen = true;
+        }
+
+        /// <summary>
+        /// Sauvegarde de la palette
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private async void MenuItemPaletteSave_Click(object sender, RoutedEventArgs e)
+        {
+            await this.Project.SavePaletteAsync();
+        }
+
+        private void MenuItemRemoveSelected_Click(object sender, RoutedEventArgs e)
+        {
+            this.project.SelectedRaster.Clear();
+        }
+
+        private void MenuItemRemoveAll_Click(object sender, RoutedEventArgs e)
+        {
+            this.project.ClearAllRasters();
+
+            for (int colorIndex = 0; colorIndex < this.project.Image.Palette.Length; colorIndex++)
+            {
+                this.PaletteControl.SetHaveRasterThumbDefined(colorIndex, this.AreRasterThumbModified(colorIndex));
+            }
+
+            this.AtariImageControl.DrawAllRastersOnScreen();
         }
     }
 }

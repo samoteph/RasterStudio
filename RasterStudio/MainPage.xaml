@@ -32,6 +32,8 @@
                             <MenuFlyoutItem Text="Open" Click="MenuItemOpen_Click"/>
                             <MenuFlyoutItem Text="Save As..." Icon="Save" Click="MenuItemSave_Click"/>
                             <MenuFlyoutSeparator />
+                            <MenuFlyoutItem Text="Save Palette As..." Icon="Save" Click="MenuItemPaletteSave_Click"/>
+                            <MenuFlyoutSeparator />
                             <MenuFlyoutItem Text="Exit" Click="MenuItemExit_Click"/>
                         </MenuBarItem>
                         <!--
@@ -40,8 +42,11 @@
                             <MenuFlyoutItem Text="Paste color" Click="MenuItemOpen_Click"/>
                         </MenuBarItem>
                         -->
-                        <MenuBarItem Title="Display">
-                            <ToggleMenuFlyoutItem Text="All rasters" IsChecked="True" Width="200" Click="MenuItemAllRasters_Click"/>
+                        <MenuBarItem Title="Rasters">
+                            <MenuFlyoutItem Text="Remove Selected" Icon="Delete" Click="MenuItemRemoveSelected_Click"/>
+                            <MenuFlyoutItem Text="Remove All" Icon="Delete" Click="MenuItemRemoveAll_Click"/>
+                            <MenuFlyoutSeparator />
+                            <ToggleMenuFlyoutItem Text="Display all" IsChecked="True" Width="200" Click="MenuItemAllRasters_Click"/>
                             <!--<ToggleMenuFlyoutItem Text="Blank screen" Click="MenuItemBlankScreen_Click"/>-->
                         </MenuBarItem>
                         <MenuBarItem Title="Help">

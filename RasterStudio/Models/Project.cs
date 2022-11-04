@@ -71,6 +71,14 @@ namespace RasterStudio.Models
             set;
         }
 
+        // pour serialisation uniquement
+        // permet de reconstruire la palette au chargement
+        public string PaletteString
+        {
+            get;
+            set;
+        }
+
         public AtariRaster[] Rasters
         {
             get;
@@ -192,6 +200,8 @@ namespace RasterStudio.Models
 
         public async Task SaveProjectAsync(StorageFile file)
         {
+            this.PaletteString = AtariPalette.SavePaletteToString(this.Image.Palette);
+
             string jsonProject = JsonConvert.SerializeObject(this);
 
             var jsonArray = Encoding.ASCII.GetBytes(jsonProject);
@@ -227,6 +237,12 @@ namespace RasterStudio.Models
             }
         }
 
+        /// <summary>
+        /// Exportation au format Text du projet selon le template selectionné
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+
         public async Task ExportProjectAsync(StorageFile file)
         {
             string export = this.Exporter.GetExportText();
@@ -237,6 +253,32 @@ namespace RasterStudio.Models
             using (var stream = await file.OpenStreamForWriteAsync())
             {
                 await stream.WriteAsync(exportArray, 0, exportArray.Length);
+            }
+        }
+
+        public async Task SavePaletteAsync()
+        {
+            var savePicker = new Windows.Storage.Pickers.FileSavePicker();
+            savePicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
+            // Dropdown of file types the user can save the file as
+            savePicker.FileTypeChoices.Add("JSAC-PAL Palette file", new List<string>() { ".pal" });
+            // Default file name if the user does not type one in or select a file to replace
+            savePicker.SuggestedFileName = this.FilenameWithoutExtension + ".pal";
+
+            Windows.Storage.StorageFile file = await savePicker.PickSaveFileAsync();
+
+            if (file != null)
+            {
+                await this.SavePaletteAsync(file);
+            }
+        }
+
+        public async Task SavePaletteAsync(StorageFile file)
+        {
+            // Ecriture du fichier .ras
+            using (var stream = await file.OpenStreamForWriteAsync())
+            {
+                AtariPalette.SavePalette(this.Image.Palette, stream);
             }
         }
 
@@ -283,11 +325,23 @@ namespace RasterStudio.Models
 
             MemoryStream streamPng = new MemoryStream(content, index, pngLength);
 
-            AtariImage image = AtariImage.Load(streamPng);
+            var project = JsonConvert.DeserializeObject<Project>(jsonProject);
 
-            var project = JsonConvert.DeserializeObject <Project>(jsonProject);
-        
-            for(int i = 0; i<this.Rasters.Length; i++)
+            this.PaletteString = project.PaletteString;
+
+            AtariImage image = null;
+
+            if (this.PaletteString != null)
+            {
+                var palette = AtariPalette.LoadPaletteFromString(this.PaletteString);
+                image = AtariImage.Load(streamPng, palette);
+            }
+            else
+            {
+                image = AtariImage.Load(streamPng);
+            }
+
+            for (int i = 0; i < project.Rasters.Length; i++)
             {
                 var raster = project.Rasters[i];
                 raster.Initialize(image, i);
@@ -296,6 +350,14 @@ namespace RasterStudio.Models
             this.Image = image;
             this.Rasters = project.Rasters;
             this.SelectedRasterIndex = project.SelectedRasterIndex;
+        }
+
+        public void ClearAllRasters()
+        {
+            foreach(var raster in this.Rasters)
+            {
+                raster.Clear();
+            }
         }
     }
 }

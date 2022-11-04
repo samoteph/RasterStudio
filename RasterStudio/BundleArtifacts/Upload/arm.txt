@@ -1,0 +1,2 @@
+MainPackage=C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\ARM\Release\Upload\RasterStudio_1.0.2.0_ARM.msix
+SymbolPackage=C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\ARM\Release\Upload\RasterStudio_1.0.2.0\RasterStudio_1.0.2.0_ARM.appxsym

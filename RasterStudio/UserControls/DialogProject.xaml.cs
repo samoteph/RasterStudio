@@ -104,12 +104,16 @@ namespace RasterStudio.UserControls
                 case DialogActions.New:
                     this.TextBoxProjectName.Text = String.Empty;
                     this.TextBoxImageFilename.Text = String.Empty;
+                    this.TextBoxPaletteFilename.Text = String.Empty;
                     this.ComboBoxPalette.SelectedIndex = 0;
+                    this.imageFile = null;
+                    this.palFile = null;
                     break;
 
                 case DialogActions.Modify:
                     this.TextBoxProjectName.Text = MainPage.Instance.Project.Title;
                     this.TextBoxImageFilename.Text = this.imageFile?.Path ?? String.Empty;
+                    this.TextBoxPaletteFilename.Text = this.palFile?.Path ?? String.Empty;
                     this.ComboBoxPalette.SelectedIndex = 0;
                     break;
             }
@@ -181,6 +185,9 @@ namespace RasterStudio.UserControls
                     }
                     else
                     {
+                        this.imageFile = null;
+                        this.palFile = null;
+                        
                         MainPage.Instance.Project.Title = this.TextBoxProjectName.Text;
 
                         await MainPage.Instance.LoadEmptyProjectAsync();
@@ -222,6 +229,10 @@ namespace RasterStudio.UserControls
             if (this.palFile != null)
             {
                 this.TextBoxPaletteFilename.Text = this.palFile.Path;
+            }
+            else
+            {
+                this.TextBoxPaletteFilename.Text = String.Empty;
             }
         }
     }

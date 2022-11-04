@@ -11,7 +11,7 @@
 
     <StackPanel x:Name="LayoutRoot">
 
-        <local:TagTextBox x:Name="TagTextBoxHeader" TextCommand="{Binding HeaderTextCommand, Mode=TwoWay}" HorizontalAlignment="Stretch" Title="Raster lines header" TextChanged="TagTextBox_TextChanged">
+        <local:TagTextBox x:Name="TagTextBoxHeader" TextCommand="{Binding HeaderTextCommand, Mode=TwoWay}" HorizontalAlignment="Stretch" Title="&#x2261; Raster lines header" TextChanged="TagTextBox_TextChanged">
             <local:TagTextBox.TitleContent>
                 <StackPanel Orientation="Horizontal">
                     <ComboBox x:Name="ComboBoxOrientation" VerticalAlignment="Center" FontSize="13" BorderThickness="0.5" Margin="0,0,10,0">
@@ -21,6 +21,9 @@
                     <ComboBox x:Name="ComboBoxLines" VerticalAlignment="Center" FontSize="13" BorderThickness="0.5" >
                         <ComboBoxItem Content="All lines" Tag="All"></ComboBoxItem>
                         <ComboBoxItem Content="Changing lines" Tag="Changing"></ComboBoxItem>
+                        <ComboBoxItem Content="Changing lines w/o last" Tag="ChangingWithoutLast"></ComboBoxItem>
+                        <ComboBoxItem Content="Changing last line" Tag="ChangingLastLine"></ComboBoxItem>
+                        <ComboBoxItem Content="Line 0" Tag="LineZero"></ComboBoxItem>
                     </ComboBox>
                 </StackPanel>
             </local:TagTextBox.TitleContent>
@@ -51,5 +54,15 @@
 
         <local:TagTextBox x:Name="TagTextBoxFooter" TextCommand="{Binding FooterTextCommand, Mode=TwoWay}" Title="Raster line Footer" TextChanged="TagTextBox_TextChanged"/>
 
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
+            <Button Margin="5,0,5,0" Height="30" Click="ButtonAddRaster_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="+" FontSize="20" VerticalAlignment="Center" Margin="0,-2,0,0"/>
+                    <TextBlock Text="add raster" Foreground="#DDDDDD" FontSize="12" VerticalAlignment="Center" Margin="4,0,0,0"/>
+                </StackPanel>
+            </Button>
+            <Button Content="-" FontSize="25" Padding="0,-7.5,0,0" Width="30" Height="30" Click="ButtonRemoveRaster_Click"></Button>
+        </StackPanel>
+        
     </StackPanel>
 </UserControl>

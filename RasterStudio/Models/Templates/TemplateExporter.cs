@@ -78,10 +78,16 @@ namespace RasterStudio.Models
             this.PaletteHeader.TextCommand = exporter.PaletteHeaderTagManager.TextCommand;
             this.PaletteFooter.TextCommand = exporter.PaletteFooterTagManager.TextCommand;
 
+            this.TemplateRasterExporters.Clear();
+
             for (int i=0;i<exporter.TextRasterExporters.Count;i++)
             {
                 var rasterExporter = exporter.TextRasterExporters[i];
-                this.TemplateRasterExporters[i].CopyFrom(rasterExporter);
+                var templateRasterExporter = new TemplateRasterExporter();
+                
+                templateRasterExporter.CopyFrom(rasterExporter);
+                
+                this.TemplateRasterExporters.Add(templateRasterExporter);
             }
         }
 

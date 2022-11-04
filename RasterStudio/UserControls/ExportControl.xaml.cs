@@ -226,7 +226,14 @@ namespace RasterStudio.UserControls
         {
             return Task.Run(() =>
             {
-                this.ExecuteUpdatePreview();
+                try
+                {
+                    this.ExecuteUpdatePreview();
+                }
+                catch
+                {
+                    // peut arriver en cas de suppression;
+                }
             });
         }
 

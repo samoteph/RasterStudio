@@ -90,6 +90,10 @@ namespace RasterStudio.Models
         public AtariRaster raster;
         public int line;
         public bool isLastColor;
+        public int nextLine;
+        public int nextChangingLine;
+        public int diffChangingLine;
+        public int lineCounter;
     }
 
     public delegate string GetTagRasterHandler(TagRasterParameters parameters);

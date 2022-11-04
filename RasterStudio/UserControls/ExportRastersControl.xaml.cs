@@ -33,8 +33,6 @@ namespace RasterStudio.UserControls
             this.TextBoxSeparator.TextChanged += OnSeparatorTextChanged;
         }
 
-
-
         public TextRasterExporter RasterExporter
         {
             get { return (TextRasterExporter)GetValue(RasterExporterProperty); }
@@ -72,9 +70,11 @@ namespace RasterStudio.UserControls
         {
             var item = (this.ComboBoxLines.SelectedItem as ComboBoxItem);
 
-            this.RasterExporter.LineSelector = (string)item.Tag == "All" ? LineSelector.All : LineSelector.Changing;
-            
-            SelectorChanged?.Invoke(this,EventArgs.Empty);
+            if( Enum.TryParse(typeof(LineSelector), (string)item.Tag, out var lineSelector))
+            {
+                this.RasterExporter.LineSelector = (LineSelector)lineSelector;
+                SelectorChanged?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         private void OnColorSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -239,6 +239,20 @@ namespace RasterStudio.UserControls
         public static readonly DependencyProperty SeparatorProperty =
             DependencyProperty.Register("Separator", typeof(string), typeof(ExportRastersControl), new PropertyMetadata(null));
 
+        private void ButtonAddRaster_Click(object sender, RoutedEventArgs e)
+        {
+            var exporter = MainPage.Instance.Project.Exporter;
+            exporter.TextRasterExporters.Add(new TextRasterExporter(exporter));
+        }
 
+        private void ButtonRemoveRaster_Click(object sender, RoutedEventArgs e)
+        {
+            var exporter = MainPage.Instance.Project.Exporter;
+
+            if (exporter.TextRasterExporters.Count > 1)
+            {
+                exporter.TextRasterExporters.Remove(this.RasterExporter);
+            }
+        }
     }
 }

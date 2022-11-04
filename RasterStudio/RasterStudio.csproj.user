@@ -9,5 +9,17 @@
     <AppIconSource>C:\Users\SamuelBlanchard\Pictures\Raster Studio\RasterStudio.png</AppIconSource>
     <SplashScreenSource>C:\Users\SamuelBlanchard\Pictures\Raster Studio\RasterStudio.png</SplashScreenSource>
     <PackageLogoSource>C:\Users\SamuelBlanchard\Pictures\Raster Studio\RasterStudio.png</PackageLogoSource>
+    <AppxShowAllApps>False</AppxShowAllApps>
+    <UapAppxPackageBuildMode>StoreAndSideload</UapAppxPackageBuildMode>
+    <AppxBuildConfigurationSelection>x86|x64</AppxBuildConfigurationSelection>
+    <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <DeviceId>30f105c9-681e-420b-a277-7c086ead8a4e</DeviceId>
+    <UseEmulator>true</UseEmulator>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
+    <DeviceId>30f105c9-681e-420b-a277-7c086ead8a4e</DeviceId>
+    <UseEmulator>true</UseEmulator>
   </PropertyGroup>
 </Project>

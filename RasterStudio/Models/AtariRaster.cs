@@ -16,6 +16,8 @@ namespace RasterStudio.Models
 {
     public class AtariRaster
     {
+        private AtariImage image;
+
         // Contient les couleurs du rasters
         [JsonIgnore]
         public AtariColor[] Colors
@@ -107,6 +109,7 @@ namespace RasterStudio.Models
 
         public void Initialize(AtariImage image, int colorIndex)
         {
+            this.image = image;
             this.ColorIndex = colorIndex;
             this.Colors = new AtariColor[image.Height];
 
@@ -255,6 +258,41 @@ namespace RasterStudio.Models
             var temp = this.colorIndex;
             this.ColorIndex = selectedRaster.ColorIndex;
             selectedRaster.ColorIndex = temp;
+        }
+
+        public void Clear()
+        {
+            List<RasterThumb> thumbsToRemove = new List<RasterThumb>(10);
+            List<RasterThumb> thumbsEdge = new List<RasterThumb>(2);
+
+            foreach (var thumb in this.Thumbs)
+            {
+                if (thumb.IsEdge == false)
+                {
+                    thumbsToRemove.Add(thumb);
+                }
+                else
+                {
+                    thumbsEdge.Add(thumb);
+                }
+            }
+
+            while (thumbsToRemove.Count != 0)
+            {
+
+                this.Thumbs.Remove(thumbsToRemove[0]);
+                thumbsToRemove.RemoveAt(0);
+            }
+
+            thumbsEdge[0].Line = 0;
+            thumbsEdge[0].EasingFunction = EasingFunction.Linear;
+            thumbsEdge[0].EasingMode = EasingMode.Out;
+            thumbsEdge[0].Color = this.image.Palette[this.ColorIndex];
+
+            thumbsEdge[1].Line = this.image.Height - 1;
+            thumbsEdge[1].EasingFunction = EasingFunction.Linear;
+            thumbsEdge[1].EasingMode = EasingMode.Out;
+            thumbsEdge[1].Color = this.image.Palette[this.ColorIndex];
         }
     }
 }

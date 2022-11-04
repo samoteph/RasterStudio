@@ -1,0 +1,6 @@
+MainPackage=C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Release\Upload\RasterStudio_1.0.3.0_x64.msix
+SymbolPackage=C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Release\Upload\RasterStudio_1.0.3.0\RasterStudio_1.0.3.0_x64.appxsym
+ResourcePack=C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Release\Upload\RasterStudio_1.0.3.0_scale-100.msix
+ResourcePack=C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Release\Upload\RasterStudio_1.0.3.0_scale-125.msix
+ResourcePack=C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Release\Upload\RasterStudio_1.0.3.0_scale-150.msix
+ResourcePack=C:\Dev\Uwp\Labo\RasterStudio\RasterStudio\bin\x64\Release\Upload\RasterStudio_1.0.3.0_scale-400.msix

@@ -173,5 +173,124 @@ namespace RasterStudio.Models
 
         private bool isLastColor = false;
 
+        public int NextLine
+        {
+            get
+            {
+                return this.nextLine;
+            }
+
+            set
+            {
+                if (nextLine != value)
+                {
+                    this.nextLine = value;
+
+                    foreach (var tag in this.GetTags())
+                    {
+                        var tagRaster = (TagRaster)tag;
+
+                        tagRaster.Parameters.nextLine = value;
+                    }
+
+                    if (this.raster != null)
+                    {
+                        this.ReplaceText();
+                    }
+                }
+            }
+        }
+
+        private int nextLine = 0;
+
+        public int NextChangingLine
+        {
+            get
+            {
+                return this.nextChangingLine;
+            }
+
+            set
+            {
+                if (nextChangingLine != value)
+                {
+                    this.nextChangingLine = value;
+
+                    foreach (var tag in this.GetTags())
+                    {
+                        var tagRaster = (TagRaster)tag;
+
+                        tagRaster.Parameters.nextChangingLine = value;
+                    }
+
+                    if (this.raster != null)
+                    {
+                        this.ReplaceText();
+                    }
+                }
+            }
+        }
+
+        private int nextChangingLine = 0;
+
+        public int DiffChangingLine
+        {
+            get
+            {
+                return this.diffChangingLine;
+            }
+
+            set
+            {
+                if (diffChangingLine != value)
+                {
+                    this.diffChangingLine = value;
+
+                    foreach (var tag in this.GetTags())
+                    {
+                        var tagRaster = (TagRaster)tag;
+
+                        tagRaster.Parameters.diffChangingLine = value;
+                    }
+
+                    if (this.raster != null)
+                    {
+                        this.ReplaceText();
+                    }
+                }
+            }
+        }
+
+        private int diffChangingLine = 0;
+
+        public int LineCounter
+        {
+            get
+            {
+                return this.lineCounter;
+            }
+
+            set
+            {
+                if (lineCounter != value)
+                {
+                    this.lineCounter = value;
+
+                    foreach (var tag in this.GetTags())
+                    {
+                        var tagRaster = (TagRaster)tag;
+
+                        tagRaster.Parameters.lineCounter = value;
+                    }
+
+                    if (this.raster != null)
+                    {
+                        this.ReplaceText();
+                    }
+                }
+            }
+        }
+
+        private int lineCounter = 0;
     }
 }
