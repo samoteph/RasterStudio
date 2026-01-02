@@ -284,5 +284,10 @@ namespace RasterStudio.UserControls
             dataPackage.SetText(this.TextBlockPreview.Text);
             Clipboard.SetContent(dataPackage);
         }
+
+        private void ButtonLoadTemplate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

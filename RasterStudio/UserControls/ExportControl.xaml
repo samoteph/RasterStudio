@@ -63,11 +63,15 @@
 
             <StackPanel Orientation="Horizontal" Grid.Column="5">
                 <Button x:Name="ButtonSaveTemplate" ToolTipService.ToolTip="Save template" Margin="5,0,5,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="ButtonSaveTemplate_Click">
-                    <FontIcon Glyph="&#xE105;" FontSize="14"/>
+                    <FontIcon Glyph="&#xE792;" FontSize="14"/>
                 </Button>
                 <Button x:Name="ButtonDeleteTemplate" IsEnabled="{Binding ElementName=ComboBoxTemplates, Path=SelectedItem.IsEditable}" ToolTipService.ToolTip="Delete template" Margin="5,0,5,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="ButtonDeleteTemplate_Click">
                     <FontIcon Glyph="&#xE107;" FontSize="14"/>
                 </Button>
+                <Button x:Name="ButtonLoadTemplate" ToolTipService.ToolTip="Load template" Margin="5,0,5,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="ButtonLoadTemplate_Click">
+                    <FontIcon Glyph="&#xE105;" FontSize="14"/>
+                </Button>
+
             </StackPanel>
         </Grid>
         

@@ -11,7 +11,7 @@
     <AssemblyName>RasterStudio</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22000.0</TargetPlatformVersion>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.22621.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -367,17 +367,17 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Sam\Dev\UWP\Labo\SamuelBlanchard.Xaml.Controls.Samples.SlateView\SamuelBlanchard.Xaml.Controls.SlateView\SamuelBlanchard.Xaml.Controls.SlateView.csproj">
+    <Content Include="Assets\Projects\Default.hbl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Atari\MBiDL\Tools\Generator\ImageScrollGenerator\Atari.Images\Atari.Images.csproj">
+      <Project>{6511e3a5-117d-4a69-962e-bb0190d34924}</Project>
+      <Name>Atari.Images</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SlateView\SamuelBlanchard.Xaml.Controls.SlateView\SamuelBlanchard.Xaml.Controls.SlateView.csproj">
       <Project>{2812329c-8de6-41a0-9d7b-2a92817ef67a}</Project>
       <Name>SamuelBlanchard.Xaml.Controls.SlateView</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\Sam\Emulator\Atari\Disk\HardDrive2\Dev\Tools\Scroll\ImageScrollGenerator\Atari.Images\Atari.Images.csproj">
-      <Project>{61578AAC-1EB9-4400-8861-833A67E5CE2A}</Project>
-      <Name>Atari.Images</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Assets\Projects\Default.hbl" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

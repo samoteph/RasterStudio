@@ -120,7 +120,10 @@ namespace SamuelBlanchard.Audio
 
             set
             {
-                _outputNode.OutgoingGain = value;
+                if (_outputNode != null)
+                {
+                    _outputNode.OutgoingGain = value;
+                }
             }
         }
 
